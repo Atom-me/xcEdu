@@ -30,6 +30,11 @@ zuul:
       serviceId: xc-service-manage-course
       strip-prefix: false
       sensitiveHeaders:
+    manage-course-category:
+      path: /category/**
+      serviceId: xc-service-manage-course
+      strip-prefix: false
+      sensitiveHeaders:
     manage-cms:
       path: /cms/**
       serviceId: xc-service-manage-cms
