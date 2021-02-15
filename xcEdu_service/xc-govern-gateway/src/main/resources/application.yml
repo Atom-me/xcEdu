@@ -23,8 +23,8 @@ zuul:
     xc-service-learning: #路由名称，名称任意，保持所有路由名称唯一
       path: /learning/**
       serviceId: xc-service-learning
-      strip-prefix: false
-      sensitiveHeaders:
+      strip-prefix: false #代理转发时不去掉前缀
+      sensitiveHeaders: #默认zuul会屏蔽cookie，cookie不会传到下游，这里设置空表示取消默认的黑名单，如果设置了具体的头信息则不会传到下游服务
     manage-course:
       path: /course/**
       serviceId: xc-service-manage-course
