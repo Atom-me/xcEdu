@@ -122,7 +122,7 @@
                     if(!uid){
                         return ;
                     }
-                    //请求查询jwt
+                    //请求查询jwt，解析JWT中用户信息
                     getjwt().then((res) => {
                         if(res.success){
                             let jwt = res.jwt;
