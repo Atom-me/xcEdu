@@ -5,10 +5,10 @@ spring:
     name: xc-service-learning
   datasource:
     druid:
-      url: ${MYSQL_URL:jdbc:mysql://192.168.136.110:3306/xc_learning?characterEncoding=utf-8}
+      url: ${MYSQL_URL:jdbc:mysql://192.168.56.1:3307/xc_learning?characterEncoding=utf-8}
       username: root
-      password: 123456
-      driverClassName: com.mysql.jdbc.Driver
+      password: root
+      driverClassName: com.mysql.cj.jdbc.Driver
       initialSize: 5  #初始建立连接数量
       minIdle: 5  #最小连接数量
       maxActive: 20 #最大连接数量
@@ -19,10 +19,10 @@ spring:
       minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
 #rabbitmq配置
   rabbitmq:
-    host: 192.168.136.110
+    host: 192.168.56.1
     port: 5672
-    username: xcEdu
-    password: 123456
+    username: admin
+    password: admin
     publisher-confirms: true
     virtual-host: /
 eureka:

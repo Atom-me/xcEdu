@@ -11,6 +11,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsResource;
@@ -30,7 +33,7 @@ public class CmsPageRepositoryTest {
 
     @Autowired
     private CmsPageRepository cmsPageRepository;
-    
+
     @Autowired
     private CmsPageService cmsPageService;
 
@@ -39,6 +42,25 @@ public class CmsPageRepositoryTest {
 
     @Autowired
     private GridFSBucket gridFSBucket;
+
+    /**
+     * 测试查询所有
+     */
+    @Test
+    public void testFindAll() {
+        List<CmsPage> all = cmsPageRepository.findAll();
+        System.err.println(all);
+    }
+
+    /**
+     * 测试分页查询
+     */
+    @Test
+    public void testFindPage() {
+        Pageable pageRequest = PageRequest.of(0, 10);
+        Page<CmsPage> all = cmsPageRepository.findAll(pageRequest);
+        System.err.println(all.getContent());
+    }
 
     @Test
     public void testInsert() {
@@ -71,7 +93,7 @@ public class CmsPageRepositoryTest {
     @Test
     public void testUpdate() {
         Optional<CmsPage> optional = cmsPageRepository.findById("5b17a34211fe5e2ee8c116c9");
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             CmsPage cmsPage = optional.get();
             cmsPage.setPageName("测试页面01");
             cmsPageRepository.save(cmsPage);
@@ -83,12 +105,12 @@ public class CmsPageRepositoryTest {
     public void testGetFile() throws IOException {
         String fileId = "5d7b815d5f31573e2021d898";
         GridFSFile gridFSFile =
-        gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
+                gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
         //打开下载流对象
         GridFSDownloadStream gridFSDownloadStream =
-        gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
+                gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
         //创建gridFsResource，用于获取流对象
-        GridFsResource gridFsResource = new GridFsResource(gridFSFile,gridFSDownloadStream);
+        GridFsResource gridFsResource = new GridFsResource(gridFSFile, gridFSDownloadStream);
         //获取流中的数据
         String s = IOUtils.toString(gridFsResource.getInputStream(), StandardCharsets.UTF_8);
         System.out.println(s);
@@ -103,7 +125,6 @@ public class CmsPageRepositoryTest {
         String s = cmsPageService.genHtml(pageId);
         System.out.println(s);
     }
-
 
 
 }

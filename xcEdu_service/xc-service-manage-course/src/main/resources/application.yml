@@ -5,10 +5,10 @@ spring:
     name: xc-service-manage-course
   datasource:
     druid:
-      url: jdbc:mysql://192.168.136.110:3306/xc_course?characterEncoding=utf-8
+      url: jdbc:mysql://192.168.56.1:3307/xc_course?characterEncoding=utf-8
       username: root
-      password: 123456
-      driverClassName: com.mysql.jdbc.Driver
+      password: root
+      driverClassName: com.mysql.cj.jdbc.Driver
       initialSize: 5  #初始建立连接数量
       minIdle: 5  #最小连接数量
       maxActive: 20 #最大连接数量
@@ -19,7 +19,7 @@ spring:
       minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
   data:
     mongodb:
-      host: 192.168.136.110
+      host: 192.168.56.1
 mybatis:
   mapper-locations: classpath:com/xuecheng/manage_course/dao/*Mapper.xml
 eureka:

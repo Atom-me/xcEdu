@@ -6,13 +6,13 @@ spring:
   data:
     mongodb:
       database: xc_cms
-      host: 192.168.136.110
+      host: 192.168.56.1
       port: 27017
   rabbitmq:
-    host: 192.168.136.110
+    host: 192.168.56.1
     port: 5672
-    username: xcEdu
-    password: 123456
+    username: admin
+    password: admin
     virtualHost: /
 xuecheng:
   mq:

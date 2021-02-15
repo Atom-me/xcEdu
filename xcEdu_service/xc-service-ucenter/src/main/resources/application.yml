@@ -5,10 +5,10 @@ spring:
     name: xc-service-ucenter
   datasource:
     druid:
-      url: ${MYSQL_URL:jdbc:mysql://192.168.136.110:3306/xc_user?characterEncoding=utf-8}
+      url: ${MYSQL_URL:jdbc:mysql://192.168.56.1:3307/xc_user?characterEncoding=utf-8}
       username: root
-      password: 123456
-      driverClassName: com.mysql.jdbc.Driver
+      password: root
+      driverClassName: com.mysql.cj.jdbc.Driver
       initialSize: 5  #初始建立连接数量
       minIdle: 5  #最小连接数量
       maxActive: 20 #最大连接数量
