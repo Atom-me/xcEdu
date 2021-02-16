@@ -17,12 +17,8 @@ spring:
     name: xc-service-manage-cms
   data:
     mongodb:
-#      host: 192.168.56.1
-#      port: 27017
-      database: xc_cms
-#      username: xccms
-#      password: xccms
       uri: mongodb://xccms:xccms@192.168.56.1:27017
+      database: xc_cms
   servlet:
     multipart:
       max-file-size: 5MB

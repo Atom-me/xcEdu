@@ -4,6 +4,8 @@ import com.xuecheng.framework.model.response.ResultCode;
 
 /**
  * 自定义异常抛出类
+ *
+ * @author atom
  */
 public class ExceptionCast {
 

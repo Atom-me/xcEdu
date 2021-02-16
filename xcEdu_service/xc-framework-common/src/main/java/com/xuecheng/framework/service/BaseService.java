@@ -4,8 +4,12 @@ import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.ResultCode;
 import org.springframework.util.StringUtils;
 
+import java.util.Objects;
+
 /**
  * 基础Service
+ *
+ * @author atom
  */
 public abstract class BaseService {
 
@@ -29,7 +33,7 @@ public abstract class BaseService {
      * @param resultCode 错误码
      */
     public void isNullOrEmpty(Object content, ResultCode resultCode) {
-        if (content == null) {
+        if (Objects.isNull(content)) {
             ExceptionCast.cast(resultCode);
         }
     }

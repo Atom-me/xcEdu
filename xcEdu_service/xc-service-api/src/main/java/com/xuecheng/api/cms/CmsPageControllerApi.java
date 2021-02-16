@@ -11,35 +11,38 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "CMS页面管理接口", description = "CMS页面管理接口，提供页面的增删改查")
+/**
+ * @author atom
+ */
+@Api(tags = "CMS页面管理接口")
 public interface CmsPageControllerApi {
 
-    @ApiOperation("分页查询页面列表")
+    @ApiOperation(value = "分页查询页面列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页码", required = true, paramType = "path"),
             @ApiImplicitParam(name = "size", value = "每页记录数", required = true, paramType = "path")
     })
     QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest);
 
-    @ApiOperation("新增页面")
+    @ApiOperation(value = "新增页面")
     CmsPageResult add(CmsPage cmsPage);
 
-    @ApiOperation("修改页面")
+    @ApiOperation(value = "修改页面")
     CmsPageResult edit(CmsPage cmsPage);
 
-    @ApiOperation("按ID获取页面")
+    @ApiOperation(value = "按ID获取页面")
     CmsPageResult getCmsPage(String pageId);
 
-    @ApiOperation("按ID删除页面")
+    @ApiOperation(value = "按ID删除页面")
     CmsPageResult deleteById(String pageId);
 
-    @ApiOperation("页面发布")
+    @ApiOperation(value = "页面发布")
     ResponseResult postPage(String pageId);
 
-    @ApiOperation("保存页面")
+    @ApiOperation(value = "保存页面")
     CmsPageResult save(CmsPage cmsPage);
 
-    @ApiOperation("页面一键发布")
+    @ApiOperation(value = "页面一键发布")
     CmsPostPageResult postPageQuick(CmsPage cmsPage);
 
 }

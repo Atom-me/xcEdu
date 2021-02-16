@@ -18,7 +18,9 @@ public class CmsTemplate {
 
     //站点ID
     private String siteId;
-    //模版ID
+    /**
+     * 模版ID 对应 cms_template  集合中的 _id 字段
+     */
     @Id
     private String templateId;
     //模版名称

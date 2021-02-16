@@ -48,6 +48,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CmsPageService extends BaseService {
@@ -82,7 +85,7 @@ public class CmsPageService extends BaseService {
      */
     public QueryResponseResult findList(int page, int size, QueryPageRequest queryPageRequest) {
         // 页面别名模糊查询
-        ExampleMatcher pageAliaseMatcher = ExampleMatcher.matching().withMatcher("pageAliase", ExampleMatcher.GenericPropertyMatchers.contains());
+        ExampleMatcher pageAliasMatcher = ExampleMatcher.matching().withMatcher("pageAliase", ExampleMatcher.GenericPropertyMatchers.contains());
 
         CmsPage params = new CmsPage();
         // 站点ID
@@ -93,7 +96,7 @@ public class CmsPageService extends BaseService {
         params.setPageAliase(queryPageRequest.getPageAliase());
 
         // 构建查询条件
-        Example<CmsPage> cmsPageExample = Example.of(params, pageAliaseMatcher);
+        Example<CmsPage> cmsPageExample = Example.of(params, pageAliasMatcher);
 
         if (page <= 0) {
             page = 1;
@@ -345,7 +348,7 @@ public class CmsPageService extends BaseService {
 
         // 删除原有html文件
         String htmlFileId = cmsPage.getHtmlFileId();
-        if(StringUtils.isNotEmpty(htmlFileId)){
+        if (StringUtils.isNotEmpty(htmlFileId)) {
             gridFsTemplate.delete(Query.query(Criteria.where("_id").is(htmlFileId)));
         }
 

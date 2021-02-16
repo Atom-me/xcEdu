@@ -1,17 +1,18 @@
 package com.xuecheng.framework.model.response;
 
 import lombok.Data;
-import lombok.ToString;
 
+/**
+ * @author atom
+ */
 @Data
-@ToString
 public class QueryResponseResult extends ResponseResult {
 
     QueryResult queryResult;
 
-    public QueryResponseResult(ResultCode resultCode,QueryResult queryResult){
+    public QueryResponseResult(ResultCode resultCode, QueryResult queryResult) {
         super(resultCode);
-       this.queryResult = queryResult;
+        this.queryResult = queryResult;
     }
 
 }

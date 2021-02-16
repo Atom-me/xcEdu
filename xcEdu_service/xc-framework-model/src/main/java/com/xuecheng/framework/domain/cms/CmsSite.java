@@ -18,7 +18,9 @@ import java.util.Date;
 @Document(collection = "cms_site")
 public class CmsSite {
 
-    //站点ID
+    /**
+     * 站点ID 对应 cms_site  集合中的 _id 字段
+     */
     @Id
     private String siteId;
     //站点名称

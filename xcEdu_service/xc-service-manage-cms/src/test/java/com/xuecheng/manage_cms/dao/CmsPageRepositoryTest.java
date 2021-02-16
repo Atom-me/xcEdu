@@ -62,11 +62,12 @@ public class CmsPageRepositoryTest {
         System.err.println(all.getContent());
     }
 
+
     @Test
     public void testInsert() {
         //定义实体类
         CmsPage cmsPage = new CmsPage();
-        cmsPage.setSiteId("s01");
+        cmsPage.setSiteId("atom--1");
         cmsPage.setTemplateId("t01");
         cmsPage.setPageName("测试页面");
         cmsPage.setPageCreateTime(new Date());
@@ -82,25 +83,40 @@ public class CmsPageRepositoryTest {
     }
 
 
-    //删除
+    /**
+     * 删除
+     */
     @Test
     public void testDelete() {
-        cmsPageRepository.deleteById("5b17a2c511fe5e0c409e5eb3");
+        cmsPageRepository.deleteById("602b7c6fd9d0561f58be5921");
     }
 
 
-    //修改
+    /**
+     * 修改，修改记录也是使用save方法
+     */
     @Test
     public void testUpdate() {
-        Optional<CmsPage> optional = cmsPageRepository.findById("5b17a34211fe5e2ee8c116c9");
+        Optional<CmsPage> optional = cmsPageRepository.findById("602b7db8d9d0561f820c6448");
         if (optional.isPresent()) {
             CmsPage cmsPage = optional.get();
-            cmsPage.setPageName("测试页面01");
+            cmsPage.setPageName("atom-测试");
             cmsPageRepository.save(cmsPage);
         }
     }
 
-    // 文件下载
+    @Test
+    public void testFindByPageName(){
+        CmsPage page = cmsPageRepository.findByPageName("atom-测试");
+        System.err.println(page);
+    }
+
+
+    /**
+     * 文件下载
+     *
+     * @throws IOException
+     */
     @Test
     public void testGetFile() throws IOException {
         String fileId = "5d7b815d5f31573e2021d898";

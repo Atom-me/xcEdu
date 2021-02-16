@@ -8,7 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitmqConfig {
 
-    //交换机的名称
+    /**
+     * 交换机的名称
+     */
     public static final String EX_ROUTING_CMS_POSTPAGE = "ex_routing_cms_postpage";
 
     /**

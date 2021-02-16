@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("sys/dictionary")
 public class DictionaryController extends BaseController {
