@@ -5,9 +5,13 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.model.response.ResultCode;
 import lombok.Data;
 
+/**
+ * @author atom
+ */
 @Data
 public class CmsTemplateResult extends ResponseResult {
     CmsTemplate cmsTemplate;
+
     public CmsTemplateResult(ResultCode resultCode, CmsTemplate cmsTemplate) {
         super(resultCode);
         this.cmsTemplate = cmsTemplate;

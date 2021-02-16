@@ -15,6 +15,8 @@ import java.nio.file.AccessDeniedException;
 
 /**
  * 统一异常处理类
+ *
+ * @author atom
  */
 @Slf4j
 @ControllerAdvice
@@ -57,7 +59,8 @@ public class ExceptionCatch {
     @ExceptionHandler(Exception.class)
     public ResponseResult exception(Throwable e) {
         log.error("发生异常, 异常信息：{}", e.getMessage());
-        if (OPTIONS.containsKey(e.getClass())) {// 该异常为已知异常类型
+        // 该异常为已知异常类型
+        if (OPTIONS.containsKey(e.getClass())) {
             return new ResponseResult(OPTIONS.get(e.getClass()));
         }
         return new ResponseResult(CommonCode.SERVER_ERROR);

@@ -10,10 +10,10 @@
           </el-option>
         </el-select>
         <!-- 页面别名输入框 -->
-        <span style="margin-left: 10px;">页面别名：</span>  
+        <span style="margin-left: 10px;">页面别名：</span>
         <el-input v-model="params.pageAliase" placeholder="" style="width: 200px"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="query" style="margin-top: 20px">查询</el-button>
-        <!-- 新增页面按钮 -->
+        <!-- 新增页面按钮,相当于 一个超链接a标签，直接跳转到指定页面 ，并且带上页面page,siteId参数，供新增页面返回按钮使用-->
         <router-link class="mui-tab-item" :to="{path:'/cms/page/add/',query:{ page: this.params.page, siteId: this.params.siteId}}">
           <el-button type="primary" icon="el-icon-plus" style="margin-top: 20px">新增页面</el-button>
         </router-link>
@@ -99,7 +99,7 @@
         // 编辑cms页面
         edit:function(index, data) {
           this.$router.push({
-                    path:'/cms/page/edit', 
+                    path:'/cms/page/edit',
                     query: {
                         page:this.params.page,
                         siteId:this.params.siteId,
@@ -125,7 +125,7 @@
                 // 重新查询数据
                 this.query()
               })
-              
+
           })
         },
         postPage:function(index, data) {
@@ -158,10 +158,12 @@
           }
         }
       },
+      // vue 钩子方法， mounted：DOM元素渲染完成后调用，在这里实现进入页面就执行查询
       mounted() {
           this.query()
           this.cmsSiteQueryAll()
       },
+      // vue 钩子方法， created：VUE实例已经创建，但是DOM元素还没有渲染生成。
       created() {
         this.params.page = Number.parseInt(this.$route.query.page || 1)
         this.params.siteId = this.$route.query.siteId || ''

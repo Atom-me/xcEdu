@@ -12,7 +12,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    //proxyTable: proxyConfig.proxyList,
+    //proxyTable: proxyConfig.proxyList,由node.js将请求转发到后端服务地址 target
     proxyTable: {
       '/banner': {
         // target: 'http://localhost:3000/mock/11'

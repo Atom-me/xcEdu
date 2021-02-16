@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -138,7 +139,7 @@ public class CmsPageService extends BaseService {
      */
     public CmsPage edit(CmsPage cmsPage) {
         // 查询
-        if (cmsPage != null && StringUtils.isNotBlank(cmsPage.getPageId())) {
+        if (Objects.nonNull(cmsPage) && StringUtils.isNotBlank(cmsPage.getPageId())) {
             Optional<CmsPage> optionalCmsPage = cmsPageRepository.findById(cmsPage.getPageId());
             if (optionalCmsPage.isPresent()) {
                 CmsPage one = optionalCmsPage.get();
@@ -150,6 +151,7 @@ public class CmsPageService extends BaseService {
                 one.setPageWebPath(cmsPage.getPageWebPath());
                 one.setPagePhysicalPath(cmsPage.getPagePhysicalPath());
                 one.setDataUrl(cmsPage.getDataUrl());
+                one.setPageType(cmsPage.getPageType());
                 // 保存
                 return cmsPageRepository.save(one);
             }
@@ -164,7 +166,6 @@ public class CmsPageService extends BaseService {
      * @param pageId 页面ID
      */
     public void deleteById(String pageId) {
-        // 查询
         cmsPageRepository.deleteById(pageId);
     }
 
@@ -370,7 +371,7 @@ public class CmsPageService extends BaseService {
     public CmsPage save(CmsPage cmsPage) {
         CmsPage _cmsPage = cmsPageRepository
                 .findBySiteIdAndPageNameAndPageWebPath(cmsPage.getSiteId(), cmsPage.getPageName(), cmsPage.getPageWebPath());
-        if (_cmsPage == null) {
+        if (Objects.isNull(_cmsPage)) {
             // 新增
             cmsPage = add(cmsPage);
         } else {

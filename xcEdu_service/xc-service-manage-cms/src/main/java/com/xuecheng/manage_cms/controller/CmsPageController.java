@@ -15,6 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("cms/page")
 public class CmsPageController implements CmsPageControllerApi {
@@ -33,22 +35,23 @@ public class CmsPageController implements CmsPageControllerApi {
     @Override
     @PostMapping
     public CmsPageResult add(@RequestBody CmsPage cmsPage) {
-        if (cmsPage == null) {
+        if (Objects.isNull(cmsPage)) {
             ExceptionCast.cast(CommonCode.PARAMS_ERROR);
         }
-        // 校验是否已存在
+        // 校验是否已存在,使用三个字段标识一个页面的唯一性（站点ID，页面名称，页面的webPath）cms_page集合创建唯一索引 siteId_1_pageName_1_pageWebPath_1 （siteId,pageName,pageWebPath）
         CmsPage _cmsPage = cmsPageService.findBySiteIdAndPageNameAndPageWebPath(cmsPage.getSiteId(), cmsPage.getPageName(), cmsPage.getPageWebPath());
-        if (_cmsPage != null) {
+        if (Objects.nonNull(_cmsPage)) {
             ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);
         }
-        return new CmsPageResult(CommonCode.SUCCESS, cmsPageService.add(cmsPage));
+        CmsPage addResult = cmsPageService.add(cmsPage);
+        return new CmsPageResult(CommonCode.SUCCESS, addResult);
     }
 
     @Override
     @GetMapping("/{pageId}")
     public CmsPageResult getCmsPage(@PathVariable("pageId") String pageId) {
         CmsPage cmsPage = cmsPageService.findByPageId(pageId);
-        if (cmsPage == null) {
+        if (Objects.isNull(cmsPage)) {
             ExceptionCast.cast(CmsCode.CMS_EDITPAGE_NOTEXISTS);
         }
         return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
@@ -75,11 +78,17 @@ public class CmsPageController implements CmsPageControllerApi {
         return cmsPageService.postPage(pageId);
     }
 
+    /**
+     * 保存页面
+     *
+     * @param cmsPage
+     * @return
+     */
     @Override
     @PostMapping("save")
     public CmsPageResult save(@RequestBody CmsPage cmsPage) {
         CmsPage save = cmsPageService.save(cmsPage);
-        if (save == null) {
+        if (Objects.isNull(save)) {
             ExceptionCast.cast(CommonCode.FAIL);
         }
         return new CmsPageResult(CommonCode.SUCCESS, save);
@@ -104,11 +113,11 @@ public class CmsPageController implements CmsPageControllerApi {
     @Override
     @PutMapping
     public CmsPageResult edit(@RequestBody CmsPage cmsPage) {
-        if (cmsPage == null) {
+        if (Objects.isNull(cmsPage)) {
             ExceptionCast.cast(CommonCode.PARAMS_ERROR);
         }
         CmsPage edit = cmsPageService.edit(cmsPage);
-        if (edit == null) {
+        if (Objects.isNull(edit)) {
             ExceptionCast.cast(CommonCode.FAIL);
         }
         return new CmsPageResult(CommonCode.SUCCESS, edit);
