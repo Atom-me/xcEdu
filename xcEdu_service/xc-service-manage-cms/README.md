@@ -27,3 +27,15 @@
                                                        +----------------> | server3 |
                                                                           +---------+
 ```
+
+### 流程图生成代码：
+```shell
+
+echo '[pageTemplate+data]->[page staticize]
+[page staticize]-- save -->[GridFS]
+[GridFS]-- deploy -->[server1]{origin: GridFS; offset: 2, -1;}
+[GridFS]-- deploy -->[server2]{origin: GridFS; offset: 2, 0;}
+[GridFS]-- deploy -->[server3]{origin: GridFS; offset: 2, 1;}
+' | graph-easy
+
+```
