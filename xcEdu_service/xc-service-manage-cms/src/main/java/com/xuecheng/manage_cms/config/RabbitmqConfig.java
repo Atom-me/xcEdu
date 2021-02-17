@@ -5,6 +5,9 @@ import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author atom
+ */
 @Configuration
 public class RabbitmqConfig {
 

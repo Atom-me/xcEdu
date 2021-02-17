@@ -297,6 +297,7 @@ public class CmsPageService extends BaseService {
      * 页面发布
      *
      * @param pageId 页面ID
+     * @return
      */
     @Transactional
     public ResponseResult postPage(String pageId) {
@@ -327,7 +328,7 @@ public class CmsPageService extends BaseService {
         JSONObject message = new JSONObject();
         message.put("pageId", pageId);
 
-        // 发送消息
+        // 发送消息，routingKey 使用站点ID
         rabbitTemplate.convertAndSend(RabbitmqConfig.EX_ROUTING_CMS_POSTPAGE, cmsPage.getSiteId(), message.toJSONString());
     }
 

@@ -45,7 +45,7 @@ public class CmsPage {
      */
     private String pageParameter;
     /**
-     * 物理路径
+     * 物理路径,是一个相对路径，基于站点物理路径
      */
     private String pagePhysicalPath;
     /**
@@ -81,7 +81,7 @@ public class CmsPage {
      */
 //    private String templateFileId;
     /**
-     * 静态文件Id
+     * 根据模版生成周的HTML页面静态文件Id，GridFS中的文件ID
      */
     private String htmlFileId;
     /**
