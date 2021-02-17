@@ -35,7 +35,7 @@
             <el-form-item label="物理路径" prop="pagePhysicalPath">
                 <el-input v-model="cmsPage.pagePhysicalPath"></el-input>
             </el-form-item>
-            <el-form-item label="DataUrl" prop="dataUrl">
+            <el-form-item label="数据URL" prop="dataUrl">
                 <el-input v-model="cmsPage.dataUrl"></el-input>
             </el-form-item>
             <el-form-item label="类型" prop="pageType">
@@ -65,14 +65,14 @@
       data() {
         return {
             cmsPage: {
-                siteId:'', 
-                templateId:'', 
-                pageName: '', 
-                pageAliase: '', 
-                pageWebPath: '', 
-                pageParameter:'', 
-                pagePhysicalPath:'', 
-                pageType:'', 
+                siteId:'',
+                templateId:'',
+                pageName: '',
+                pageAliase: '',
+                pageWebPath: '',
+                pageParameter:'',
+                pagePhysicalPath:'',
+                pageType:'',
                 pageCreateTime: new Date()
             },
             cmsSiteList:[],
@@ -147,13 +147,13 @@
                     });
                 }
             });
-            
+
         },
         goBack:function() {
             if (this.$route.query.page) {
                 // 返回
                 this.$router.push({
-                    path:'/cms/page/list', 
+                    path:'/cms/page/list',
                     query: {
                         page:this.$route.query.page,
                         siteId:this.$route.query.siteId
