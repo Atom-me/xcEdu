@@ -13,6 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("cms/template")
 public class CmsTemplateController implements CmsTemplateControllerApi {
@@ -43,7 +48,7 @@ public class CmsTemplateController implements CmsTemplateControllerApi {
     @GetMapping("/{templateId}")
     public CmsTemplateResult getCmsTemplate(@PathVariable("templateId") String templateId) {
         CmsTemplate cmsTemplate = cmsTemplateService.findByTemplateId(templateId);
-        if (cmsTemplate == null) {
+        if (Objects.isNull(cmsTemplate)) {
             return new CmsTemplateResult(CommonCode.FAIL, null);
         }
         return new CmsTemplateResult(CommonCode.SUCCESS, cmsTemplate);
@@ -81,7 +86,7 @@ public class CmsTemplateController implements CmsTemplateControllerApi {
     @PutMapping
     public CmsTemplateResult edit(@RequestBody CmsTemplate cmsTemplate) {
         CmsTemplate edit = cmsTemplateService.edit(cmsTemplate);
-        if (edit != null) {
+        if (Objects.nonNull(edit)) {
             return new CmsTemplateResult(CommonCode.SUCCESS, edit);
         }
         return new CmsTemplateResult(CommonCode.FAIL, null);

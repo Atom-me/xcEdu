@@ -259,7 +259,7 @@ public class CmsPageService extends BaseService {
      */
     private String downloadFileFromMongoDB(String fileId) {
         GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileId)));
-        if (gridFSFile == null) {
+        if (Objects.isNull(gridFSFile)) {
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
         }
         //打开下载流对象
@@ -284,7 +284,7 @@ public class CmsPageService extends BaseService {
     private Map getModel(String pageId) {
         // 查询页面信息
         CmsPage cmsPage = this.findByPageId(pageId);
-        if (cmsPage == null) {
+        if (Objects.isNull(cmsPage)) {
             ExceptionCast.cast(CmsCode.CMS_EDITPAGE_NOTEXISTS);
         }
         if (StringUtils.isBlank(cmsPage.getDataUrl())) {
@@ -292,7 +292,7 @@ public class CmsPageService extends BaseService {
         }
         // 获取模型数据
         ResponseEntity<Map> forEntity = restTemplate.getForEntity(cmsPage.getDataUrl(), Map.class);
-        if (forEntity.getBody() == null) {
+        if (Objects.isNull(forEntity.getBody())) {
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAISNULL);
         }
         return forEntity.getBody();

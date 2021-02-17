@@ -17,8 +17,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CmsTemplateService {
@@ -84,7 +88,7 @@ public class CmsTemplateService {
      */
     public CmsTemplate edit(CmsTemplate cmsTemplate) {
         // 查询
-        if (cmsTemplate != null && StringUtils.isNotBlank(cmsTemplate.getTemplateId())) {
+        if (Objects.nonNull(cmsTemplate) && StringUtils.isNotBlank(cmsTemplate.getTemplateId())) {
             Optional<CmsTemplate> optionalCmsTemplate = cmsTemplateRepository.findById(cmsTemplate.getTemplateId());
             if (optionalCmsTemplate.isPresent()) {
                 CmsTemplate one = optionalCmsTemplate.get();
@@ -119,9 +123,9 @@ public class CmsTemplateService {
     }
 
     /**
-     * 上传文件
+     * 上传模版文件
      *
-     * @param file 文件
+     * @param file 模版文件
      */
     public String uploadTemplateFile(MultipartFile file) {
         try {

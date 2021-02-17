@@ -6,6 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CmsConfigService {
@@ -14,7 +17,7 @@ public class CmsConfigService {
     private CmsConfigRepository cmsConfigRepository;
 
     /**
-     * 按ID查询CMS配置信息
+     * 按ID查询CMS配置信息(页面数据模型数据)
      *
      * @param id id
      */

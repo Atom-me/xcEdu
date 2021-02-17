@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("cms/config")
 public class CmsConfigController implements CmsConfigControllerApi {
@@ -23,7 +28,7 @@ public class CmsConfigController implements CmsConfigControllerApi {
     @GetMapping("{id}")
     public CmsConfig getModel(@PathVariable String id) {
         CmsConfig cmsConfig = cmsConfigService.findById(id);
-        if (cmsConfig == null) {
+        if (Objects.isNull(cmsConfig)) {
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAURLISNULL);
         }
         return cmsConfig;

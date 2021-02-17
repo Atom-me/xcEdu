@@ -10,7 +10,7 @@
 4. 静态化的HTML页面存放在哪里？
 > 生成的静态化页面，由CMS程序自动发布到服务器（门户服务器、其他）中，实现页面的快速上线。
 
-## 页面静态化以及页面发布流程图：
+## 页面静态化及页面发布流程图：
 1. 编辑页面模版
 2. 确定页面数据
 3. 对页面进行静态化
@@ -39,3 +39,70 @@ echo '[pageTemplate+data]->[page staticize]
 ' | graph-easy
 
 ```
+## 页面静态化流程：
+1. 静态化程序首先读取页面获取dataUrl（获取页面数据模型的URL）
+
+2. 静态化程序远程请求dataUrl得到页面数据模型
+3. 获取页面模版
+4. 执行页面静态化
+
+```java
+                                            +----------------------+
+                                            |         html         |
+                                            +----------------------+
+                                              ^
+                                              | 4.page staticize
+                                              |
++-------------------+  1.get page DataUrl   +----------------------+  2.http invoke DataUrl get dataModel   +---------+
+| cms_page(MongoDB) | <-------------------- | pageStaticizeProgram | -------------------------------------> | DataUrl |
++-------------------+                       +----------------------+                                        +---------+
+                                              |
+                                              | 3.get page template
+                                              v
+                                            +----------------------+
+                                            |        GridFS        |
+                                            +----------------------+
+```
+
+### 流程图生成代码：
+```shell
+echo '[pageStaticizeProgram]-- 1.get page DataUrl -->[cms_page(MongoDB)]
+[pageStaticizeProgram]-- 2.http invoke DataUrl get dataModel -->[DataUrl]
+[pageStaticizeProgram]-- 3.get page template -->[GridFS]
+[pageStaticizeProgram]-- 4.page staticize  -->[html]
+' | graph-easy
+```
+
+## typora页面宽度调整
+
+ascii流程图如果显示不正常，可以调整typora页面宽度
+
+首先打开偏好设置 -> 打开主题文件夹 -> 新建 night.user.css 文件，填入如下内容。
+
+```css
+/* 调整视图正文宽度 */
+#write{
+    max-width: 90%;
+}
+
+/* 调整源码正文宽度 */
+#typora-source .CodeMirror-lines {
+    max-width: 90%;
+}
+
+/* 调整输出 PDF 文件宽度 */
+@media print {
+    #write{
+        max-width: 95%;
+    }
+    @page {
+        size: A3;
+    }
+}
+
+/* 调整正文字体,字体需单独下载 */
+body {
+    font-family: IBM Plex Sans;
+}
+```
+

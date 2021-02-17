@@ -134,9 +134,10 @@ public class CmsPageRepositoryTest {
     }
 
 
+
     @Test
     public void testGenHtml() {
-        String pageId = "5d7b85025f315734a084d61e";
+        String pageId = "5a795ac7dd573c04508f3a56";
         // 生成html
         String s = cmsPageService.genHtml(pageId);
         System.out.println(s);

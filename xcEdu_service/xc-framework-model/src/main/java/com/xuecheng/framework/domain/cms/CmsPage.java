@@ -85,7 +85,7 @@ public class CmsPage {
      */
     private String htmlFileId;
     /**
-     * 数据Url
+     * 获取模版数据模型的Url，它基于HTTP方式，CMS对页面进行静态化时会从页面信息中读取dataUrl,通过HTTP远程调用的方法请求dataUrl获取数据模型
      */
     private String dataUrl;
 
