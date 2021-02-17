@@ -9,6 +9,8 @@ import com.xuecheng.manage_cms.service.CmsSiteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("cms/site")
 public class CmsSiteController implements CmsSiteControllerApi {
@@ -39,7 +41,7 @@ public class CmsSiteController implements CmsSiteControllerApi {
     @GetMapping("/{siteId}")
     public CmsSiteResult getCmsSite(@PathVariable("siteId") String siteId) {
         CmsSite cmsSite = cmsSiteService.findBySiteId(siteId);
-        if (cmsSite == null) {
+        if (Objects.isNull(cmsSite)) {
             return new CmsSiteResult(CommonCode.FAIL, null);
         }
         return new CmsSiteResult(CommonCode.SUCCESS, cmsSite);
@@ -60,7 +62,7 @@ public class CmsSiteController implements CmsSiteControllerApi {
     @PutMapping
     public CmsSiteResult edit(@RequestBody CmsSite cmsSite) {
         CmsSite edit = cmsSiteService.edit(cmsSite);
-        if (edit != null) {
+        if (Objects.nonNull(edit)) {
             return new CmsSiteResult(CommonCode.SUCCESS, edit);
         }
         return new CmsSiteResult(CommonCode.FAIL, null);

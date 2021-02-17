@@ -299,7 +299,7 @@ public class CmsPageService extends BaseService {
      * @param pageId 页面ID
      * @return
      */
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public ResponseResult postPage(String pageId) {
         // 执行静态化
         String htmlContent = genHtml(pageId);
@@ -309,7 +309,7 @@ public class CmsPageService extends BaseService {
         CmsPage cmsPage = saveHtml(pageId, htmlContent);
 
         // 发送消息到MQ
-        sendMessage(cmsPage.getPageId());
+        sendPostPageMessage(cmsPage);
 
         return ResponseResult.SUCCESS();
     }
@@ -317,16 +317,12 @@ public class CmsPageService extends BaseService {
     /**
      * 发送消息到MQ
      *
-     * @param pageId 页面ID
+     * @param cmsPage 页面
      */
-    private void sendMessage(String pageId) {
-        // 查询CmsPage
-        CmsPage cmsPage = findByPageId(pageId);
-        isNullOrEmpty(cmsPage, CmsCode.CMS_EDITPAGE_NOTEXISTS);
-
+    private void sendPostPageMessage(CmsPage cmsPage) {
         // 构造消息
         JSONObject message = new JSONObject();
-        message.put("pageId", pageId);
+        message.put("pageId", cmsPage.getPageId());
 
         // 发送消息，routingKey 使用站点ID
         rabbitTemplate.convertAndSend(RabbitmqConfig.EX_ROUTING_CMS_POSTPAGE, cmsPage.getSiteId(), message.toJSONString());
@@ -349,7 +345,7 @@ public class CmsPageService extends BaseService {
             gridFsTemplate.delete(Query.query(Criteria.where("_id").is(htmlFileId)));
         }
 
-        // 保存生成的html
+        // 保存生成的html到GridFS
         InputStream inputStream = IOUtils.toInputStream(htmlContent, StandardCharsets.UTF_8);
         ObjectId objectId = gridFsTemplate.store(inputStream, cmsPage.getPageName());
 

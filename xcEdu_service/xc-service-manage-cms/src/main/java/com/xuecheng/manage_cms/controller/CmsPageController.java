@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("cms/page")
 public class CmsPageController implements CmsPageControllerApi {
@@ -73,7 +76,7 @@ public class CmsPageController implements CmsPageControllerApi {
      * @param pageId 页面ID
      */
     @Override
-    @GetMapping("post/{pageId}")
+    @PostMapping("post/{pageId}")
     public ResponseResult postPage(@PathVariable String pageId) {
         return cmsPageService.postPage(pageId);
     }

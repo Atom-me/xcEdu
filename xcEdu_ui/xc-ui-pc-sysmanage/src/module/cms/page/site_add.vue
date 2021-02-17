@@ -13,6 +13,9 @@
             <el-form-item label="访问路径" prop="siteWebPath">
                 <el-input v-model="cmsSite.siteWebPath"></el-input>
             </el-form-item>
+            <el-form-item label="物理路径" prop="sitePhysicalPath">
+              <el-input v-model="cmsSite.sitePhysicalPath" placeholder="以/开头，不要以/结尾"></el-input>
+            </el-form-item>
             <el-form-item label="创建日期" prop="siteCreateTime">
                 <el-date-picker
                     v-model="cmsSite.siteCreateTime"
@@ -34,10 +37,11 @@
       data() {
         return {
             cmsSite: {
-                siteName: '', 
-                siteDomain: '', 
+                siteName: '',
+                siteDomain: '',
                 sitePort: '',
                 siteWebPath:'',
+                sitePhysicalPath:'',
                 siteCreateTime: new Date()
             },
             rules: {
@@ -55,6 +59,9 @@
                 ],
                 siteWebPath: [
                     { required: true, message: '请输入站点访问路径', trigger: 'blur' }
+                ],
+                sitePhysicalPath: [
+                  { required: true, message: '请输入站点物理路径', trigger: 'blur' }
                 ]
             }
         }
@@ -95,13 +102,13 @@
                     });
                 }
             });
-            
+
         },
         goBack:function() {
             if (this.$route.query.page) {
                 // 返回
                 this.$router.push({
-                    path:'/cms/site/list', 
+                    path:'/cms/site/list',
                     query: {
                         page:this.$route.query.page,
                         siteId:this.$route.query.siteId
@@ -115,7 +122,7 @@
         }
       },
       created() {
-        
+
       },
       mounted() {
       }

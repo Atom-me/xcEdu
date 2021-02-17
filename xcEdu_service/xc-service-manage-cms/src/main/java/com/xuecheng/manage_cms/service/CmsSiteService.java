@@ -1,29 +1,30 @@
 package com.xuecheng.manage_cms.service;
 
-import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.CmsSite;
-import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
 import com.xuecheng.manage_cms.dao.CmsSiteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CmsSiteService {
 
-    @Autowired
+    @Resource
     private CmsSiteRepository cmsSiteRepository;
 
     public QueryResponseResult findAll() {
@@ -79,16 +80,18 @@ public class CmsSiteService {
      */
     public CmsSite edit(CmsSite cmsSite) {
         // 查询
-        if (cmsSite != null && StringUtils.isNotBlank(cmsSite.getSiteId())) {
+        if (Objects.nonNull(cmsSite) && StringUtils.isNotBlank(cmsSite.getSiteId())) {
             Optional<CmsSite> optionalCmsSite = cmsSiteRepository.findById(cmsSite.getSiteId());
             if (optionalCmsSite.isPresent()) {
                 CmsSite one = optionalCmsSite.get();
                 // 执行更新
-                one.setSiteCreateTime(cmsSite.getSiteCreateTime());
-                one.setSiteDomain(cmsSite.getSiteDomain());
-                one.setSiteName(cmsSite.getSiteName());
-                one.setSitePort(cmsSite.getSitePort());
-                one.setSiteWebPath(cmsSite.getSiteWebPath());
+//                one.setSiteCreateTime(cmsSite.getSiteCreateTime());
+//                one.setSiteDomain(cmsSite.getSiteDomain());
+//                one.setSiteName(cmsSite.getSiteName());
+//                one.setSitePort(cmsSite.getSitePort());
+//                one.setSiteWebPath(cmsSite.getSiteWebPath());
+//                one.setSitePhysicalPath(cmsSite.getSitePhysicalPath());
+                BeanUtils.copyProperties(cmsSite,one);
                 // 保存
                 return cmsSiteRepository.save(one);
             }

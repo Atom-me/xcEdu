@@ -51,7 +51,7 @@ export const deleteCmsPageById = (pageId) => {
  * 页面发布
  */
 export const postPage = (pageId) => {
-  return http.requestQuickGet(apiUrl + '/cms/page/post/' + pageId)
+  return http.requestPost(apiUrl + '/cms/page/post/' + pageId)
 }
 
 

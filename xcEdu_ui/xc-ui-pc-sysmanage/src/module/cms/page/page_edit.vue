@@ -33,7 +33,7 @@
                 <el-input v-model="cmsPage.pageWebPath"></el-input>
             </el-form-item>
             <el-form-item label="物理路径" prop="pagePhysicalPath">
-                <el-input v-model="cmsPage.pagePhysicalPath"></el-input>
+                <el-input v-model="cmsPage.pagePhysicalPath" placeholder="以/开头，以/结尾"></el-input>
             </el-form-item>
             <el-form-item label="数据URL" prop="dataUrl">
                 <el-input v-model="cmsPage.dataUrl"></el-input>

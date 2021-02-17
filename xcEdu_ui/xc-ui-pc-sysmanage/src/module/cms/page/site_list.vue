@@ -12,6 +12,7 @@
             <el-table-column prop="siteDomain" label="站点域" width="320"></el-table-column>
             <el-table-column prop="sitePort" label="站点端口" width="100"></el-table-column>
             <el-table-column prop="siteWebPath" label="访问路径" width="250"></el-table-column>
+            <el-table-column prop="sitePhysicalPath" label="物理路径" width="250"></el-table-column>
             <el-table-column prop="siteCreateTime" label="创建时间"></el-table-column>
             <el-table-column align="center"  label="操作" fixed="right" width="200px">
               <template slot-scope="scope">
@@ -69,7 +70,7 @@
         // 编辑cms站点
         edit:function(index, data) {
           this.$router.push({
-                    path:'/cms/site/edit', 
+                    path:'/cms/site/edit',
                     query: {
                         page:this.params.page,
                         siteId:data.siteId
@@ -92,7 +93,7 @@
                   type: 'success'
                 })
               })
-              
+
               // 重新查询数据
               this.query()
           })
