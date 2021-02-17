@@ -147,7 +147,8 @@
         },
         // 页面预览
         preview:function(index, data) {
-            window.open("http://localhost:31001/cms/preview/" + data.pageId)
+            // window.open("http://localhost:31001/cms/preview/" + data.pageId)
+            window.open("http://www.xuecheng.com/cms/preview/" + data.pageId)
         },
         // 页面类型数据格式化
         pageTypeFormatter:function(row, column, cellValue, index) {

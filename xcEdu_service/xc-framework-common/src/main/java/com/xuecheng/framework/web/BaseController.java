@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 /**
  * @author mrt
@@ -23,13 +24,9 @@ public class BaseController {
 
     @ModelAttribute
     public void setReqAndRes(HttpServletRequest request, HttpServletResponse response) {
-
         this.request = request;
-
         this.response = response;
-
         this.session = request.getSession();
-
     }
 
     /**
@@ -51,7 +48,7 @@ public class BaseController {
      * @param resultCode 错误码
      */
     public void isNullOrEmpty(Object content, ResultCode resultCode) {
-        if (content == null) {
+        if (Objects.isNull(content)) {
             ExceptionCast.cast(resultCode);
         }
     }

@@ -30,7 +30,6 @@ public class CmsTemplateService {
     @Autowired
     private CmsTemplateRepository cmsTemplateRepository;
 
-
     @Autowired
     private GridFsTemplate gridFsTemplate;
 

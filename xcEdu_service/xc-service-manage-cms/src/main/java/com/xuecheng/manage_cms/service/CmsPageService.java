@@ -193,30 +193,25 @@ public class CmsPageService extends BaseService {
     public String genHtml(String pageId) {
         String html = null;
 
-        // 获取数据模型
+        // 1.获取页面的DataUrl并且获取数据模型
         Map model = getModel(pageId);
 
-        // 获取模板信息
+        // 2.获取模板信息
         String templateContent = getTemplate(pageId);
 
-        // 执行静态化
+        // 3.执行静态化
         try {
             // 配置类
             Configuration configuration = new Configuration(Configuration.getVersion());
-
             // 模板加载器
             StringTemplateLoader templateLoader = new StringTemplateLoader();
             templateLoader.putTemplate("template", templateContent);
-
             // 配置
             configuration.setTemplateLoader(templateLoader);
-
             // 获取模板
             Template template = configuration.getTemplate("template");
-
             // 静态化
             html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
-
         } catch (IOException e) {
             // 获取模板失败
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
@@ -234,12 +229,12 @@ public class CmsPageService extends BaseService {
      * @return 模板内容
      */
     private String getTemplate(String pageId) {
-        // 查询页面信息
+        // 查询页面信息，获取模版ID
         CmsPage cmsPage = this.findByPageId(pageId);
         isNullOrEmpty(cmsPage, CmsCode.CMS_EDITPAGE_NOTEXISTS);
         isNullOrEmpty(cmsPage.getTemplateId(), CmsCode.CMS_EDITPAGE_NOTEXISTS);
 
-        // 查询模板数据
+        // 根据模版ID查询模板数据
         CmsTemplate cmsTemplate = cmsTemplateService.findByTemplateId(cmsPage.getTemplateId());
         isNullOrEmpty(cmsTemplate, CmsCode.CMS_GENERATEHTML_TEMPLATEISNULL);
         // 查询模板文件信息
