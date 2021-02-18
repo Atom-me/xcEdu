@@ -1,5 +1,6 @@
 package com.xuecheng.framework.domain.cms;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -67,6 +68,7 @@ public class CmsPage {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pageCreateTime;
     /**
      * 模版id

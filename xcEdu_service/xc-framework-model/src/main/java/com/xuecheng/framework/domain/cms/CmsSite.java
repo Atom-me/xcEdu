@@ -41,7 +41,7 @@ public class CmsSite {
     /**
      * 站点创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:SS")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date siteCreateTime;
     /**
      * 站点物理路径
