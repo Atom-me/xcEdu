@@ -32,7 +32,7 @@
             <el-radio class="radio" label='2'>文档</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="学习时长（分钟）  请输入数字" >
+        <el-form-item label="学习时长（分钟）  请输入数字最大999.99" >
           <el-input type="number" v-model="teachplanActive.timelength" auto-complete="off" ></el-input>
         </el-form-item>
         <el-form-item label="排序字段" >
