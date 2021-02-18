@@ -29,7 +29,7 @@ public class CoursePicService extends BaseService {
      * @return CoursePic
      */
     public CoursePic save(String courseId, String pic) {
-        CoursePic result = null;
+        CoursePic result;
         // 查询课程图片
         Optional<CoursePic> optionalCoursePic = coursePicRepository.findById(courseId);
         if (optionalCoursePic.isPresent()) {

@@ -6,15 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
- * Created by mrt on 2018/3/20.
+ * @author mrt
+ * @date 2018/3/20
  */
 @Data
-@ToString
+@ToString(callSuper = true)
 public class DeleteCourseResult extends ResponseResult {
     public DeleteCourseResult(ResultCode resultCode, String courseId) {
         super(resultCode);
         this.courseid = courseid;
     }
+
     private String courseid;
 
 }

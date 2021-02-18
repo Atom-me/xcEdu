@@ -8,9 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
+/**
+ * @author atom
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 public class CoursePublishResult extends ResponseResult {
     private String previewUrl;

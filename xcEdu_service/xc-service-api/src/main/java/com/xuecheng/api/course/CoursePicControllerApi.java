@@ -5,16 +5,26 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "课程图片管理接口", description = "课程图片管理接口，提供图片的增删改查")
+/**
+ * @author atom
+ */
+@Api(tags = "课程图片管理接口")
 public interface CoursePicControllerApi {
 
-    @ApiOperation("新增课程图片")
+    /**
+     * 新增课程图片
+     *
+     * @param courseId 课程ID
+     * @param pic      图片ID
+     * @return
+     */
+    @ApiOperation(value = "新增课程图片")
     CoursePic saveCoursePic(String courseId, String pic);
 
-    @ApiOperation("查询课程图片")
+    @ApiOperation(value = "查询课程图片")
     CoursePic findById(String courseId);
 
-    @ApiOperation("删除课程图片")
+    @ApiOperation(value = "删除课程图片")
     ResponseResult deleteById(String courseId);
 
 }
