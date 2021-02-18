@@ -17,51 +17,54 @@ import com.xuecheng.manage_course.dao.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CourseService extends BaseService {
 
-    @Autowired
+    @Resource
     private CourseBaseRepository courseBaseRepository;
 
-    @Autowired
+    @Resource
     private CoursePicRepository coursePicRepository;
 
-    @Autowired
-    private CoursePlanMapper coursePlanMapper;
+    @Resource
+    private TeachplanMapper teachplanMapper;
 
-    @Autowired
+    @Resource
     private CoursePlanRepository coursePlanRepository;
 
-    @Autowired
+    @Resource
     private CourseMarketRepository courseMarketRepository;
 
-    @Autowired
+    @Resource
     private CmsPageClient cmsPageClient;
 
-    @Autowired
+    @Resource
     private CoursePublishConfig coursePublishConfig;
 
-    @Autowired
+    @Resource
     private CourseBaseService courseBaseService;
 
-    @Autowired
+    @Resource
     private CoursePubRepository coursePubRepository;
 
-    @Autowired
+    @Resource
     private TeachplanMediaRepository teachplanMediaRepository;
 
-    @Autowired
+    @Resource
     private TeachplanMediaPubRepository teachplanMediaPubRepository;
 
     /**
@@ -86,7 +89,7 @@ public class CourseService extends BaseService {
         courseMarketOptional.ifPresent(result::setCourseMarket);
 
         // 查询课程计划信息
-        TeachplanNode teachplanNode = coursePlanMapper.findList(id);
+        TeachplanNode teachplanNode = teachplanMapper.findList(id);
         result.setTeachplanNode(teachplanNode);
 
         return result;
@@ -227,7 +230,7 @@ public class CourseService extends BaseService {
         }
 
         //课程计划
-        TeachplanNode teachplanNode = coursePlanMapper.findList(id);
+        TeachplanNode teachplanNode = teachplanMapper.findList(id);
         //将课程计划转成json
         String teachPlanString = JSON.toJSONString(teachplanNode);
         coursePub.setTeachplan(teachPlanString);

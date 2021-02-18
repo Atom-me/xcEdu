@@ -6,16 +6,19 @@ import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.service.BaseService;
 import com.xuecheng.manage_course.dao.CoursePicRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Optional;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CoursePicService extends BaseService {
 
-    @Autowired
+    @Resource
     private CoursePicRepository coursePicRepository;
 
     /**

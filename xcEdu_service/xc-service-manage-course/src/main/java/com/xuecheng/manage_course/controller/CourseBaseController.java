@@ -11,19 +11,23 @@ import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.utils.XcOauth2Util;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_course.service.CourseBaseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("course/coursebase")
 public class CourseBaseController extends BaseController implements CourseBaseControllerApi {
 
-    @Autowired
+    @Resource
     private CourseBaseService courseBaseService;
 
 
     @Override
-//    @GetMapping("list/{page}/{size}")
+    @GetMapping("list/{page}/{size}")
     public QueryResponseResult findList(@PathVariable int page,
                                         @PathVariable int size,
                                         CourseListRequest queryPageRequest) {
@@ -72,7 +76,8 @@ public class CourseBaseController extends BaseController implements CourseBaseCo
     }
 
     @Override
-    @GetMapping("/list/{page}/{size}")
+    //todo 临时注释
+//    @GetMapping("/list/{page}/{size}")
     public QueryResponseResult findCourseList(@PathVariable int page, @PathVariable int size,
                                               CourseListRequest courseListRequest) {
         // 获取当前用户信息

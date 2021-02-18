@@ -26,7 +26,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 @ComponentScan(basePackages = {"com.xuecheng.manage_course"})
 @ComponentScan(basePackages = {"com.xuecheng.framework"})//扫描common下的所有类
 public class ManageCourseApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(ManageCourseApplication.class, args);
     }
 

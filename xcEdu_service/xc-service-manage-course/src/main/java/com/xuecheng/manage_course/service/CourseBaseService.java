@@ -13,22 +13,25 @@ import com.xuecheng.manage_course.dao.CourseBaseRepository;
 import com.xuecheng.manage_course.dao.CourseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class CourseBaseService extends BaseService {
 
-    @Autowired
+    @Resource
     private CourseBaseRepository courseBaseRepository;
 
-    @Autowired
+    @Resource
     private CourseMapper courseMapper;
 
     /**
@@ -113,7 +116,7 @@ public class CourseBaseService extends BaseService {
      * @return 课程列表
      */
     public QueryResponseResult findCourseList(String companyId, int page, int size, CourseListRequest courseListRequest) {
-        if(courseListRequest == null){
+        if (courseListRequest == null) {
             courseListRequest = new CourseListRequest();
         }
         // 设置companyid
@@ -127,6 +130,6 @@ public class CourseBaseService extends BaseService {
         QueryResult<CourseInfo> courseInfoQueryResult = new QueryResult<>();
         courseInfoQueryResult.setList(list);
         courseInfoQueryResult.setTotal(total);
-        return new QueryResponseResult(CommonCode.SUCCESS,courseInfoQueryResult);
+        return new QueryResponseResult(CommonCode.SUCCESS, courseInfoQueryResult);
     }
 }

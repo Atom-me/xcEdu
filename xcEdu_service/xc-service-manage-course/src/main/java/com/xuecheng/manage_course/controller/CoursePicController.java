@@ -6,14 +6,18 @@ import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_course.service.CoursePicService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("course/coursepic")
 public class CoursePicController extends BaseController implements CoursePicControllerApi {
 
-    @Autowired
+    @Resource
     private CoursePicService coursePicService;
 
     /**

@@ -144,12 +144,11 @@
       },
       //提交课程计划
       addTeachplan(){
-        this.resetForm()
+        // this.resetForm()
         //校验表单
         this.$refs.teachplanForm.validate((valid) => {
             if (valid) {
-                //调用api方法
-              //将课程id设置到teachplanActive
+                //调用api方法，将课程id设置到teachplanActive
               this.teachplanActive.courseid = this.courseid
               courseApi.addTeachplan(this.teachplanActive).then(res=>{
                 if(res.success){
@@ -194,8 +193,7 @@
         //校验表单
         this.$refs.teachplanForm.validate((valid) => {
             if (valid) {
-                //调用api方法
-              //将课程id设置到teachplanActive
+                //调用api方法，将课程id设置到teachplanActive
               this.teachplanActive.courseid = this.courseid
               courseApi.editTeachplan(this.teachplanActive).then(res=>{
                 if(res.success){
@@ -233,8 +231,8 @@
                 //刷新树
                 this.findTeachplan()
               })
-              
-            
+
+
           })
 
       },

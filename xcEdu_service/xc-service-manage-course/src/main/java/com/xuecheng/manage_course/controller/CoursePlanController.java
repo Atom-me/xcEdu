@@ -11,17 +11,22 @@ import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_course.service.CoursePlanService;
 import com.xuecheng.manage_course.service.CourseService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.util.Objects;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("course/teachplan")
 public class CoursePlanController extends BaseController implements CoursePlanControllerApi {
 
-    @Autowired
+    @Resource
     private CoursePlanService coursePlanService;
 
-    @Autowired
+    @Resource
     private CourseService courseService;
 
     /**
@@ -57,7 +62,7 @@ public class CoursePlanController extends BaseController implements CoursePlanCo
     @Override
     @PostMapping("add")
     public ResponseResult add(@RequestBody Teachplan teachplan) {
-        if (teachplan == null || StringUtils.isBlank(teachplan.getCourseid())) {
+        if (Objects.isNull(teachplan) || StringUtils.isBlank(teachplan.getCourseid())) {
             return new ResponseResult(CommonCode.PARAMS_ERROR);
         }
         // 新增

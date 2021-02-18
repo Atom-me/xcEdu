@@ -7,41 +7,44 @@ import com.xuecheng.framework.domain.course.response.CourseCode;
 import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.service.BaseService;
 import com.xuecheng.manage_course.dao.CourseBaseRepository;
-import com.xuecheng.manage_course.dao.CoursePlanMapper;
 import com.xuecheng.manage_course.dao.CoursePlanRepository;
+import com.xuecheng.manage_course.dao.TeachplanMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * 课程计划Service
+ * 课程教学计划Service
+ *
+ * @author atom
  */
 @Slf4j
 @Service
 public class CoursePlanService extends BaseService {
 
-    @Autowired
+    @Resource
     private CoursePlanRepository coursePlanRepository;
 
-    @Autowired
-    private CoursePlanMapper coursePlanMapper;
+    @Resource
+    private TeachplanMapper teachplanMapper;
 
-    @Autowired
+    @Resource
     private CourseBaseRepository courseBaseRepository;
 
 
     /**
-     * 查询指定课程的课程ID
+     * 根据指定课程的课程ID查询课程教学计划
      *
      * @param courseId 课程ID
      * @return TeachPlanNode
      */
     public TeachplanNode findList(String courseId) {
-        return coursePlanMapper.findList(courseId);
+        return teachplanMapper.findList(courseId);
     }
 
     /**
@@ -53,7 +56,8 @@ public class CoursePlanService extends BaseService {
     public Teachplan add(Teachplan teachplan) {
         Teachplan root = getTeachplanRoot(teachplan.getCourseid());
 
-        // 设置父ID
+        // 设置父ID,如果用户未选择上级节点，则Parentid为空，
+        // 则将此计划的父节点设置为当前课程的二级节点
         if (StringUtils.isBlank(teachplan.getParentid())) {
             teachplan.setParentid(root.getId());
         }
@@ -112,7 +116,8 @@ public class CoursePlanService extends BaseService {
 
         // 查询根节点下的所有二级节点
         List<Teachplan> secondaryTeachplanList = coursePlanRepository.findByCourseidAndParentid(courseBase.get().getId(), "0");
-        if (secondaryTeachplanList == null || secondaryTeachplanList.isEmpty()) {// 若不存在根节点
+        // 若不存在根节点
+        if (CollectionUtils.isEmpty(secondaryTeachplanList)) {
             // 创建根节点
             Teachplan root = new Teachplan();
             root.setCourseid(courseBase.get().getId());

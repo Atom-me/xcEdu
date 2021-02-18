@@ -5,6 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+/**
+ * @author atom
+ */
 public interface CoursePlanRepository extends CrudRepository<Teachplan, String> {
 
     /**

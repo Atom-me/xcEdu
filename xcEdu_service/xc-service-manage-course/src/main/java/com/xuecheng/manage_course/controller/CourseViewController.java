@@ -7,14 +7,18 @@ import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_course.service.CourseService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("course")
 public class CourseViewController extends BaseController implements CourseViewControllerApi {
 
-    @Autowired
+    @Resource
     private CourseService courseService;
 
 

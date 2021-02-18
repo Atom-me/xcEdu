@@ -5,6 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
+/**
+ * @author atom
+ */
 public interface CategoryRepository extends CrudRepository<Category, String> {
 
     List<Category> findByParentid(String parentId);

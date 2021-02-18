@@ -8,10 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * Created by Administrator.
+ *
+ * @author atom
  */
 @Mapper
 public interface CourseMapper {
-   CourseBase findCourseBaseById(String id);
+
+    CourseBase findCourseBaseById(String id);
 
     Page<CourseInfo> findCourseListPage(CourseListRequest courseListRequest);
 }
