@@ -7,10 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
- * Created by admin on 2018/2/6.
+ * 数据字典配置项的值
+ *
+ * @author admin
+ * @date 2018/2/6
  */
 @Data
-@ToString
 public class SysDictionaryValue {
 
     @Field("sd_id")

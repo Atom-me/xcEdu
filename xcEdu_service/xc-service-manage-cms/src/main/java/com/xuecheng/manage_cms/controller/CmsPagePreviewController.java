@@ -3,12 +3,14 @@ package com.xuecheng.manage_cms.controller;
 import com.xuecheng.framework.domain.cms.response.CmsCode;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_cms.service.CmsPageService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,12 +26,13 @@ import java.nio.charset.StandardCharsets;
  *
  * @author atom
  */
+@Api(tags = "CMS页面预览接口")
 @Slf4j
 @Controller
 @RequestMapping("cms/preview")
 public class CmsPagePreviewController extends BaseController {
 
-    @Autowired
+    @Resource
     private CmsPageService cmsPageService;
 
     /**
@@ -37,6 +40,7 @@ public class CmsPagePreviewController extends BaseController {
      *
      * @param pageId 预览的页面ID
      */
+    @ApiOperation(value = "CMS页面预览")
     @RequestMapping("/{pageId}")
     public void preview(@PathVariable String pageId) {
         // 获取页面内容，根据页面模版，生成HTML文件内容

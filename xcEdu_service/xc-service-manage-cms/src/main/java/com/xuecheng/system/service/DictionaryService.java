@@ -4,14 +4,18 @@ import com.xuecheng.framework.domain.system.SysDictionary;
 import com.xuecheng.framework.service.BaseService;
 import com.xuecheng.manage_cms.dao.DictionaryRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class DictionaryService extends BaseService {
 
-    @Autowired
+    @Resource
     private DictionaryRepository dictionaryRepository;
 
     /**

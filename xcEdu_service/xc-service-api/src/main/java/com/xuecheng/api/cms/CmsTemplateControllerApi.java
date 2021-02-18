@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * @author atom
  */
-@Api(tags = "CMS模板管理接口,提供模板的增删改查")
+@Api(tags = "CMS模板管理接口")
 public interface CmsTemplateControllerApi {
 
     @ApiOperation(value = "查询所有模板信息")

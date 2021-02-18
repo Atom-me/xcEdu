@@ -1,6 +1,7 @@
 <template>
   <section style="margin-top: 10px">
     <el-row>
+
       <el-col :span="8"  :offset=2 >
         <el-card :body-style="{ padding: '10px' }">
           <img src="/static/images/add.jpg" class="image" height="150px">
@@ -15,6 +16,7 @@
           </div>
         </el-card>
       </el-col>
+
       <el-col :span="8" v-for="(course, index) in courses" :key="course.id" :offset="index > 0 ? 2 : 2">
         <el-card :body-style="{ padding: '10px' }">
           <img :src="course.pic!=null?imgUrl+course.pic:'/static/images/nonepic.jpg'" class="image" height="150px">
@@ -35,7 +37,9 @@
                        style="float:right;">
         </el-pagination>
       </el-col>
+
     </el-row>
+
   </section>
 </template>
 <script>

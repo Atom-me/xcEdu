@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author atom
@@ -41,7 +42,6 @@ public class CourseBaseService extends BaseService {
      * @return CourseBase
      */
     public CourseBase add(CourseBase courseBase) {
-        // 新增
         return courseBaseRepository.save(courseBase);
     }
 
@@ -116,7 +116,7 @@ public class CourseBaseService extends BaseService {
      * @return 课程列表
      */
     public QueryResponseResult findCourseList(String companyId, int page, int size, CourseListRequest courseListRequest) {
-        if (courseListRequest == null) {
+        if (Objects.isNull(courseListRequest)) {
             courseListRequest = new CourseListRequest();
         }
         // 设置companyid

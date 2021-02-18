@@ -7,10 +7,10 @@ import io.swagger.annotations.ApiOperation;
 /**
  * @author atom
  */
-@Api(tags = "cms配置管理接口,提供数据模型的管理、查询接口")
+@Api(tags = "CMS页面数据模型管理接口")
 public interface CmsConfigControllerApi {
 
-    @ApiOperation("根据id查询CMS配置信息(页面数据模型数据)")
+    @ApiOperation(value = "根据id查询CMS配置信息(页面数据模型数据)")
     CmsConfig getModel(String id);
 
 }

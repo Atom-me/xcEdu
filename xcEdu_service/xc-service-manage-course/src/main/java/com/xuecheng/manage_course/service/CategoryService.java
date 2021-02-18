@@ -23,6 +23,7 @@ public class CategoryService {
      * @return CategoryNode
      */
     public CategoryNode findCategoryList() {
+        //构建根节点数据
         CategoryNode sourceCategoryNode = buildCategoryNode(categoryRepository.findByParentid("0").get(0));
 
         // 查询第二级分类列表
@@ -35,7 +36,7 @@ public class CategoryService {
     }
 
     /**
-     * 构造分类节点列表
+     * 递归构造分类节点列表
      *
      * @param categoryList
      * @return List<CategoryNode>
@@ -49,7 +50,6 @@ public class CategoryService {
             if (!categoryNodes.isEmpty()) {
                 categoryNode.setChildren(categoryNodes);
             }
-
             return categoryNode;
         }).collect(Collectors.toList());
     }
@@ -67,7 +67,6 @@ public class CategoryService {
         categoryNode.setIsleaf(category.getIsleaf());
         categoryNode.setLabel(category.getLabel());
         categoryNode.setName(category.getName());
-
         return categoryNode;
     }
 }

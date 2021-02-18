@@ -6,13 +6,16 @@ import lombok.Data;
 import lombok.ToString;
 
 /**
- * Created by mrt on 2018/4/13.
+ * @author mrt
+ * @date 2018/4/13
  */
 @Data
-@ToString
+@ToString(callSuper = true)
 public class CourseListRequest extends RequestData {
 
-    //公司Id
+    /**
+     * 公司Id
+     */
     @ApiModelProperty("公司ID")
     private String companyId;
 }
