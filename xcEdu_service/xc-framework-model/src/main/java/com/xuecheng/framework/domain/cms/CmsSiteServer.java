@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @Modified By:
  */
 @Data
-@ToString
 @Document(collection = "cms_site_server")
 public class CmsSiteServer {
     /**

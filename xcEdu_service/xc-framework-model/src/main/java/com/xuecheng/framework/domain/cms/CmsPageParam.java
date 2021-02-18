@@ -1,7 +1,6 @@
 package com.xuecheng.framework.domain.cms;
 
 import lombok.Data;
-import lombok.ToString;
 
 /**
  * @Author: mrt.
@@ -10,7 +9,6 @@ import lombok.ToString;
  * @Modified By:
  */
 @Data
-@ToString
 public class CmsPageParam {
     /**
      * 参数名称

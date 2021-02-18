@@ -14,7 +14,6 @@ import java.util.List;
  * @date 2018/2/6
  */
 @Data
-@ToString
 @Document(collection = "cms_config")
 public class CmsConfig {
 

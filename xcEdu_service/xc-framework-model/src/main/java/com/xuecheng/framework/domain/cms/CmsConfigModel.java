@@ -1,7 +1,6 @@
 package com.xuecheng.framework.domain.cms;
 
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.Map;
 
@@ -12,7 +11,6 @@ import java.util.Map;
  * @date 2018/2/6
  */
 @Data
-@ToString
 public class CmsConfigModel {
     /**
      * 主键
