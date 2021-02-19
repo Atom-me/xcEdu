@@ -42,6 +42,7 @@ public class CourseBaseService extends BaseService {
      * @return CourseBase
      */
     public CourseBase add(CourseBase courseBase) {
+        courseBase.setStatus("202001");
         return courseBaseRepository.save(courseBase);
     }
 

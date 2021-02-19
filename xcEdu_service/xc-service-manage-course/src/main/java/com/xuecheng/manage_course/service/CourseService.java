@@ -142,11 +142,11 @@ public class CourseService extends BaseService {
          */
         saveCoursePubState(courseId, "202002");
 
-        // 更新课程索引
-        saveCoursePub(courseId, coursePubRepository.findById(courseId).orElse(null));
-
-        // 保存课程计划媒资到待索引表
-        saveTeachplanMediaPub(courseId);
+//        // 更新课程索引
+//        saveCoursePub(courseId, coursePubRepository.findById(courseId).orElse(null));
+//
+//        // 保存课程计划媒资到待索引表
+//        saveTeachplanMediaPub(courseId);
 
         return cmsPostPageResult.getPageUrl();
     }
