@@ -18,9 +18,16 @@ import java.io.Serializable;
 public class CoursePic implements Serializable {
     private static final long serialVersionUID = -916357110051689486L;
 
+    /**
+     * 一个课程只能有一张图片
+     * 课程ID
+     */
     @Id
     @GeneratedValue(generator = "jpa-assigned")
     private String courseid;
+    /**
+     * 图片ID
+     */
     private String pic;
 
 }

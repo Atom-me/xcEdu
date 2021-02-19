@@ -3,10 +3,13 @@ package com.xuecheng.manage_course.service;
 import com.xuecheng.framework.domain.course.CoursePic;
 import com.xuecheng.framework.domain.course.response.CourseCode;
 import com.xuecheng.framework.exception.ExceptionCast;
+import com.xuecheng.framework.model.response.CommonCode;
+import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.service.BaseService;
 import com.xuecheng.manage_course.dao.CoursePicRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Optional;
@@ -55,7 +58,7 @@ public class CoursePicService extends BaseService {
         // 查询课程图片
         Optional<CoursePic> optionalCoursePic = coursePicRepository.findById(courseId);
         if (!optionalCoursePic.isPresent()) {
-            ExceptionCast.cast(CourseCode.COURSE_NOT_EXIST);
+            ExceptionCast.cast(CourseCode.COURSE_PIC_NOT_EXIST);
         }
         return optionalCoursePic.get();
     }
@@ -66,7 +69,12 @@ public class CoursePicService extends BaseService {
      * @param courseId 课程ID
      * @return
      */
-    public void deleteById(String courseId) {
-        coursePicRepository.deleteById(courseId);
+    @Transactional
+    public ResponseResult deleteCoursePic(String courseId) {
+        long delResult = coursePicRepository.deleteByCourseid(courseId);
+        if (delResult > 0) {
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
     }
 }

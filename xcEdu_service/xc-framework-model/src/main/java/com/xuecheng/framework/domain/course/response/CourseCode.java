@@ -13,12 +13,13 @@ import lombok.ToString;
 @ToString
 public enum CourseCode implements ResultCode {
     COURSE_NOT_EXIST(false, 31000, "查询的课程ID不存在！"),
-    COURSE_PLAN_ADD_ERROR(false, 31006, "添加课程计划失败！"),
     COURSE_DENIED_DELETE(false, 31001, "删除课程失败，只允许删除本机构的课程！"),
     COURSE_PUBLISH_PERVIEWISNULL(false, 31002, "还没有进行课程预览！"),
     COURSE_PUBLISH_CDETAILERROR(false, 31003, "创建课程详情页面出错！"),
     COURSE_PUBLISH_COURSEIDISNULL(false, 31004, "课程Id为空！"),
     COURSE_PUBLISH_VIEWERROR(false, 31005, "发布课程视图出错！"),
+    COURSE_PLAN_ADD_ERROR(false, 31006, "添加课程计划失败！"),
+    COURSE_PIC_NOT_EXIST(false, 31007, "查询的课程图片不存在！"),
     COURSE_MEDIS_URLISNULL(false, 31101, "选择的媒资文件访问地址为空！"),
     COURSE_MEDIS_TEACHPLAN_IS_NULL(false, 31103, "查询的课程媒资关联数据为空！"),
     COURSE_MEDIA_TEACHPLAN_GRADE_ERROR(false, 31104, "当前正在操作非法课程级别！"),

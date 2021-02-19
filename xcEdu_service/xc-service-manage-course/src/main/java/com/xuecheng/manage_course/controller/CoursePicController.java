@@ -59,7 +59,6 @@ public class CoursePicController extends BaseController implements CoursePicCont
     @DeleteMapping("delete")
     public ResponseResult deleteById(@RequestParam String courseId) {
         isNullOrEmpty(courseId, CommonCode.PARAMS_ERROR);
-        coursePicService.deleteById(courseId);
-        return ResponseResult.SUCCESS();
+        return coursePicService.deleteCoursePic(courseId);
     }
 }
