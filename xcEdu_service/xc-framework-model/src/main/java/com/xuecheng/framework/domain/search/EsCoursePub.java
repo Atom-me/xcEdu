@@ -10,6 +10,9 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * @author atom
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -22,10 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author atom
@@ -142,11 +139,11 @@ public class CourseService extends BaseService {
          */
         saveCoursePubState(courseId, "202002");
 
-//        // 更新课程索引
-//        saveCoursePub(courseId, coursePubRepository.findById(courseId).orElse(null));
-//
-//        // 保存课程计划媒资到待索引表
-//        saveTeachplanMediaPub(courseId);
+        // 更新课程索引
+        saveCoursePub(courseId, coursePubRepository.findById(courseId).orElse(null));
+
+        // 保存课程计划媒资到待索引表
+        saveTeachplanMediaPub(courseId);
 
         return cmsPostPageResult.getPageUrl();
     }
@@ -190,7 +187,7 @@ public class CourseService extends BaseService {
         if (coursePubOptional.isPresent()) {
             coursePubNew = coursePubOptional.get();
         }
-        if (coursePubNew == null) {
+        if (Objects.isNull(coursePubNew)) {
             coursePubNew = new CoursePub();
         }
 

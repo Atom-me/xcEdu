@@ -26,8 +26,8 @@ node.data: true
 #node.max_local_storage_nodes: 2
 
 # 数据日志存放位置
-path.data: D:\Major\ElasticSearch\es-6.2.1-01\data
-path.logs: D:\Major\ElasticSearch\es-6.2.1-01\logs
+path.data: /data/es/data
+path.logs: /data/es/logs
 
 # 跨域设置
 http.cors.enabled: true
