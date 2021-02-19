@@ -30,9 +30,10 @@ eureka:
     ip‐address: ${IP_ADDRESS:127.0.0.1}
     instance‐id: ${spring.application.name}:${server.port} #指定实例id
 course‐publish:
-  siteId: 5d8cd1d35f31573b5c6e4f11
-  templateId: 5d8ccd635f31573b5c6e4f0e
+  siteId: 5b30cba5f58b4411fc6cb1e5
+  templateId: 602f5256d532f6febb589a4c
   previewUrl: http://www.xuecheng.com/cms/preview/
   pageWebPath: /course/detail/
-  pagePhysicalPath: F:/xcEdu/xcEdu_ui/static/course/detail/
+  pagePhysicalPath: /course/detail/
+  #获取课程详情页面模型数据地址前缀
   dataUrlPre: http://localhost:31200/course/courseview/

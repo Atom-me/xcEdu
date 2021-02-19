@@ -34,7 +34,7 @@ public class CourseViewController extends BaseController implements CourseViewCo
     }
 
     /**
-     * 预览课程
+     * 预览课程，生成页面预览URL，返回给前端，用户点击预览URL进行页面预览
      *
      * @param courseId 课程ID
      * @return CoursePublishResult
@@ -42,11 +42,11 @@ public class CourseViewController extends BaseController implements CourseViewCo
     @Override
     @PostMapping("courseview/preview/{id}")
     public CoursePublishResult coursePreview(@PathVariable("id") String courseId) {
-        String preview = courseService.preview(courseId);
-        if (StringUtils.isBlank(preview)) {
+        String previewUrl = courseService.preview(courseId);
+        if (StringUtils.isBlank(previewUrl)) {
             return new CoursePublishResult(CommonCode.FAIL, null);
         }
-        return new CoursePublishResult(CommonCode.SUCCESS, preview);
+        return new CoursePublishResult(CommonCode.SUCCESS, previewUrl);
     }
 
     /**

@@ -57,9 +57,6 @@
                 sitePort: [
                     { required: true, message: '请输入站点端口', trigger: 'blur' }
                 ],
-                siteWebPath: [
-                    { required: true, message: '请输入站点访问路径', trigger: 'blur' }
-                ],
                 sitePhysicalPath: [
                   { required: true, message: '请输入站点物理路径', trigger: 'blur' }
                 ]

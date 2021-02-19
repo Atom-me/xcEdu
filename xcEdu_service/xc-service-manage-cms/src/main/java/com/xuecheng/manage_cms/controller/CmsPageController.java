@@ -98,7 +98,9 @@ public class CmsPageController implements CmsPageControllerApi {
     }
 
     /**
-     * cms page页面一键发布
+     * cms page页面一键发布接口,页面发布成功后，CMS返回页面的URL
+     * <p>
+     * 页面URL = cmsSite.siteDomain + cmsSite.steWebPath + cmsPage.pageWebPath + cmsPage.pageName
      *
      * @param cmsPage 页面信息
      * @return CmsPostPageResult

@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * CMS PAGE API
+ *
  * @author atom
  */
 @FeignClient(value = XcServiceList.XC_SERVICE_MANAGE_CMS)
 public interface CmsPageClient {
 
     /**
-     * cms page保存
+     * 添加页面 ，用于课程预览
      *
      * @param cmsPage CMS PAGE信息
      * @return CmsPageResult

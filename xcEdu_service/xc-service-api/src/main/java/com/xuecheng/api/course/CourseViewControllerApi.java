@@ -14,16 +14,22 @@ public interface CourseViewControllerApi {
     /**
      * 查询课程预览所需模型数据
      *
-     * @param id
+     * @param courseId
      * @return
      */
     @ApiOperation(value = "查询课程预览所需模型数据")
-    CourseView courseview(String id);
+    CourseView courseview(String courseId);
 
+    /**
+     * 预览课程，生成页面预览URL，返回给前端，用户点击预览URL进行页面预览
+     *
+     * @param courseId
+     * @return
+     */
     @ApiOperation(value = "课程视图预览")
-    CoursePublishResult coursePreview(String id);
+    CoursePublishResult coursePreview(String courseId);
 
     @ApiOperation(value = "课程发布")
-    CoursePublishResult coursePublish(String id);
+    CoursePublishResult coursePublish(String courseId);
 
 }

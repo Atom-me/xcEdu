@@ -98,14 +98,18 @@ public class CourseService extends BaseService {
     /**
      * 课程预览
      *
-     * @param id 课程id
+     * @param courseId 课程id
      * @return previewUrl
      */
-    public String preview(String id) {
-        // 构造cmsPage信息
-        CmsPage cmsPage = buildCmsPage(id);
+    public String preview(String courseId) {
+        //1。请求CMS添加页面
+        //2。拼装页面预览URL
+        //3。返回页面预览URL
 
+        // 构造cmsPage信息
+        CmsPage cmsPage = buildCmsPage(courseId);
         CmsPageResult save = cmsPageClient.save(cmsPage);
+
         if (save.isSuccess()) {
             return coursePublishConfig.getPreviewUrl() + save.getCmsPage().getPageId();
         }
@@ -116,28 +120,33 @@ public class CourseService extends BaseService {
     /**
      * 课程发布
      *
-     * @param id 课程ID
+     * @param courseId 课程ID
      * @return 课程页面路径url
      */
     @Transactional
-    public String publish(String id) {
+    public String publish(String courseId) {
         // 构造cmsPage信息
-        CmsPage cmsPage = buildCmsPage(id);
+        CmsPage cmsPage = buildCmsPage(courseId);
 
-        // 发布
+        // 调用CMS一键发布接口 发布课程详情页面到服务器
         CmsPostPageResult cmsPostPageResult = cmsPageClient.postPageQuick(cmsPage);
         if (!cmsPostPageResult.isSuccess()) {
             ExceptionCast.cast(CourseCode.COURSE_PUBLISH_VIEWERROR);
         }
 
-        // 更新课程状态
-        saveCoursePubState(id, "202002");
+        // 更新课程状态为"已发布"
+        /**
+         * 制作中：202001
+         * 已发布：202002
+         * 已下线：202003
+         */
+        saveCoursePubState(courseId, "202002");
 
         // 更新课程索引
-        saveCoursePub(id, coursePubRepository.findById(id).orElse(null));
+        saveCoursePub(courseId, coursePubRepository.findById(courseId).orElse(null));
 
         // 保存课程计划媒资到待索引表
-        saveTeachplanMediaPub(id);
+        saveTeachplanMediaPub(courseId);
 
         return cmsPostPageResult.getPageUrl();
     }
@@ -259,12 +268,12 @@ public class CourseService extends BaseService {
     /**
      * 使用课程ID构造Cms Page信息
      *
-     * @param id 课程ID
+     * @param courseId 课程ID
      * @return CmsPage
      */
-    private CmsPage buildCmsPage(String id) {
+    private CmsPage buildCmsPage(String courseId) {
         // 查询课程基本信息
-        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(id);
+        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(courseId);
         if (!courseBaseOptional.isPresent()) {
             ExceptionCast.cast(CourseCode.COURSE_NOT_EXIST);
         }
@@ -278,6 +287,8 @@ public class CourseService extends BaseService {
         cmsPage.setPageWebPath(coursePublishConfig.getPageWebPath());
         cmsPage.setPagePhysicalPath(coursePublishConfig.getPagePhysicalPath());
         cmsPage.setDataUrl(coursePublishConfig.getDataUrlPre() + courseBase.getId());
+        cmsPage.setPageCreateTime(new Date());
+        cmsPage.setPageType("0");
 
         return cmsPage;
     }

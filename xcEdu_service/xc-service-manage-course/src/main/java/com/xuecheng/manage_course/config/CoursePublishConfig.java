@@ -11,10 +11,28 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "course-publish")
 public class CoursePublishConfig {
+    /**
+     * 课程预览站点ID
+     */
     private String siteId;
+    /**
+     * 课程预览页面模版ID
+     */
     private String templateId;
+    /**
+     * 课程预览URL
+     */
     private String previewUrl;
+    /**
+     * 课程预览页面webPath
+     */
     private String pageWebPath;
+    /**
+     * 页面物理路径，是一个相对于站点物理路径的相对路径。
+     */
     private String pagePhysicalPath;
+    /**
+     * 获取课程详情页面模型数据地址前缀
+     */
     private String dataUrlPre;
 }

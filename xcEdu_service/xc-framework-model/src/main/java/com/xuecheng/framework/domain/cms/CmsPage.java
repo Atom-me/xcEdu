@@ -51,6 +51,8 @@ public class CmsPage {
     private String pagePhysicalPath;
     /**
      * 类型（静态/动态）
+     * "0">静态
+     * "1">动态
      */
     private String pageType;
     /**

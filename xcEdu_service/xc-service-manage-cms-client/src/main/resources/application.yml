@@ -16,6 +16,6 @@ spring:
 xuecheng:
   mq:
     # cms客户端监控的队列名称（不同的客户端监控的队列不能重复，交换机使用Direct Exchange，所以绑定不同的队列，实现每个消费者都可以接收到消息）
-    queue: ${QUEUE:queue_cms_postpage_01}
+    queue: ${QUEUE:queue_cms_postpage_02}
     # 不同站点使用不同的站点ID作为routingkey, 此routingKey为门户站点ID
-    routingKey: ${ROUTING_KEY:5a751fab6abb5044e0d19ea1}
+    routingKey: ${ROUTING_KEY:5b30cba5f58b4411fc6cb1e5}

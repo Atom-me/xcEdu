@@ -294,7 +294,7 @@ public class CmsPageService extends BaseService {
     }
 
     /**
-     * 页面发布
+     * 页面发布（静态化、保存GridFS、向MQ发送消息）
      *
      * @param pageId 页面ID
      * @return
@@ -306,7 +306,7 @@ public class CmsPageService extends BaseService {
         isNullOrEmpty(htmlContent, CmsCode.CMS_GENERATEHTML_HTMLISNULL);
 
         // 保存页面
-        CmsPage cmsPage = saveHtml(pageId, htmlContent);
+        CmsPage cmsPage = storeHtmlAndUpdateCmsPage(pageId, htmlContent);
 
         // 发送消息到MQ
         sendPostPageMessage(cmsPage);
@@ -329,12 +329,12 @@ public class CmsPageService extends BaseService {
     }
 
     /**
-     * 保存静态页面
+     * 保存静态页面到GridFS,并更新cms page 的 htmlFileId
      *
      * @param pageId      页面ID
      * @param htmlContent 页面内容
      */
-    private CmsPage saveHtml(String pageId, String htmlContent) {
+    private CmsPage storeHtmlAndUpdateCmsPage(String pageId, String htmlContent) {
         // 查询CmsPage
         CmsPage cmsPage = findByPageId(pageId);
         isNullOrEmpty(cmsPage, CmsCode.CMS_EDITPAGE_NOTEXISTS);
@@ -355,7 +355,7 @@ public class CmsPageService extends BaseService {
     }
 
     /**
-     * 保存Cms Page
+     * 添加页面 Cms Page
      *
      * @param cmsPage cmsPage
      * @return CmsPage
@@ -376,35 +376,37 @@ public class CmsPageService extends BaseService {
     }
 
     /**
-     * 静态页面一键发布
+     * 静态页面 一键发布
+     * 页面URL = cmsSite.siteDomain + cmsSite.steWebPath + cmsPage.pageWebPath + cmsPage.pageName
      *
      * @param cmsPage 页面信息
      * @return 页面路径url
      */
     public String postPageQuick(CmsPage cmsPage) {
-        // 保存Cms Page数据
-        CmsPage save = save(cmsPage);
-        isNullOrEmpty(save, CommonCode.FAIL);
+        // 保存页面信息保存到 cms_page集合中
+        CmsPage savedPage = save(cmsPage);
+        isNullOrEmpty(savedPage, CommonCode.FAIL);
 
-        // 静态化并保存页面文件
-        ResponseResult postPage = postPage(save.getPageId());
+        // 执行页面发布（静态化、保存GridFS、向MQ发送消息）
+        ResponseResult postPage = postPage(savedPage.getPageId());
         if (!postPage.isSuccess()) {
             ExceptionCast.cast(CommonCode.FAIL);
         }
 
-        // 生成url
-        StringBuffer buffer = new StringBuffer();
-        Optional<CmsSite> cmsSiteOptional = cmsSiteRepository.findById(save.getSiteId());
+        // 拼接pageUrl
+        Optional<CmsSite> cmsSiteOptional = cmsSiteRepository.findById(savedPage.getSiteId());
         CmsSite cmsSite = cmsSiteOptional.orElse(null);
         isNullOrEmpty(cmsSite, CommonCode.FAIL);
 
         assert cmsSite != null;
+
         String siteDomain = cmsSite.getSiteDomain();
         String siteWebPath = cmsSite.getSiteWebPath();
         String pageWebPath = cmsPage.getPageWebPath();
         String pageName = cmsPage.getPageName();
 
-        return buffer
+        StringBuffer pageUrl = new StringBuffer();
+        return pageUrl
                 .append(siteDomain)
                 .append(siteWebPath)
                 .append(pageWebPath)
