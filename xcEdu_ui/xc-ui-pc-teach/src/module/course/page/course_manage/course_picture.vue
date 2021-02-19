@@ -2,6 +2,7 @@
   <div>
     <el-upload
       action="/api/filesystem/upload"
+      accept="image/jpeg,image/gif,image/png"
       list-type="picture-card"
       :before-upload="setuploaddata"
       :on-success="handleSuccess"
@@ -27,7 +28,7 @@
         dialogImageUrl: '',
         dialogVisible: false,
         fileList:[],
-        uploadval:{filetag:"course"},//上传提交的额外的数据 ，将uploadval转成key/value提交给服务器
+        uploadval:{filetag:"course",businesskey:"course"},//上传提交的额外的数据 ，将uploadval转成key/value提交给服务器
         imgUrl:sysConfig.imgUrl
       }
     },

@@ -50,7 +50,7 @@ public class CoursePicController extends BaseController implements CoursePicCont
     }
 
     /**
-     * 查询课程图片
+     * 删除课程图片
      *
      * @param courseId 课程ID
      * @return CoursePic
