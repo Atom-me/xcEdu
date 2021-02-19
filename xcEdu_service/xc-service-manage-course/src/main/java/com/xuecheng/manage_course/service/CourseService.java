@@ -70,26 +70,26 @@ public class CourseService extends BaseService {
     /**
      * 查询课程预览所需数据
      *
-     * @param id 课程ID
+     * @param courseId 课程ID
      * @return CourseView
      */
-    public CourseView getCourseView(String id) {
+    public CourseView getCourseView(String courseId) {
         CourseView result = new CourseView();
 
         // 查询课程基本信息
-        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(id);
+        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(courseId);
         courseBaseOptional.ifPresent(result::setCourseBase);
 
         // 查询课程图片
-        Optional<CoursePic> coursePicOptional = coursePicRepository.findById(id);
+        Optional<CoursePic> coursePicOptional = coursePicRepository.findById(courseId);
         coursePicOptional.ifPresent(result::setCoursePic);
 
         // 查询课程营销信息
-        Optional<CourseMarket> courseMarketOptional = courseMarketRepository.findById(id);
+        Optional<CourseMarket> courseMarketOptional = courseMarketRepository.findById(courseId);
         courseMarketOptional.ifPresent(result::setCourseMarket);
 
         // 查询课程计划信息
-        TeachplanNode teachplanNode = teachplanMapper.findList(id);
+        TeachplanNode teachplanNode = teachplanMapper.findList(courseId);
         result.setTeachplanNode(teachplanNode);
 
         return result;

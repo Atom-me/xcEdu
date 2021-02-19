@@ -5,16 +5,25 @@ import com.xuecheng.framework.domain.course.response.CoursePublishResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Api(value = "课程预览", description = "课程预览接口，提供课程预览数据的查询")
+/**
+ * @author atom
+ */
+@Api(tags = "课程预览")
 public interface CourseViewControllerApi {
 
-    @ApiOperation("课程视图查询")
+    /**
+     * 查询课程预览所需模型数据
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "查询课程预览所需模型数据")
     CourseView courseview(String id);
 
-    @ApiOperation("课程视图预览")
+    @ApiOperation(value = "课程视图预览")
     CoursePublishResult coursePreview(String id);
 
-    @ApiOperation("课程发布")
+    @ApiOperation(value = "课程发布")
     CoursePublishResult coursePublish(String id);
 
 }

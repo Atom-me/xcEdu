@@ -21,29 +21,28 @@ public class CourseViewController extends BaseController implements CourseViewCo
     @Resource
     private CourseService courseService;
 
-
     /**
-     * 查询课程预览所需数据
+     * 查询课程预览所需模型数据
      *
-     * @param id 课程ID
+     * @param courseId 课程ID
      * @return CourseView
      */
     @Override
     @GetMapping("courseview/{id}")
-    public CourseView courseview(@PathVariable String id) {
-        return courseService.getCourseView(id);
+    public CourseView courseview(@PathVariable("id") String courseId) {
+        return courseService.getCourseView(courseId);
     }
 
     /**
      * 预览课程
      *
-     * @param id 课程ID
+     * @param courseId 课程ID
      * @return CoursePublishResult
      */
     @Override
     @PostMapping("courseview/preview/{id}")
-    public CoursePublishResult coursePreview(@PathVariable String id) {
-        String preview = courseService.preview(id);
+    public CoursePublishResult coursePreview(@PathVariable("id") String courseId) {
+        String preview = courseService.preview(courseId);
         if (StringUtils.isBlank(preview)) {
             return new CoursePublishResult(CommonCode.FAIL, null);
         }
@@ -53,13 +52,13 @@ public class CourseViewController extends BaseController implements CourseViewCo
     /**
      * 课程发布
      *
-     * @param id 课程ID
+     * @param courseId 课程ID
      * @return CoursePublishResult
      */
     @Override
     @PostMapping("publish/{id}")
-    public CoursePublishResult coursePublish(@PathVariable String id) {
-        String publishUrl = courseService.publish(id);
+    public CoursePublishResult coursePublish(@PathVariable("id") String courseId) {
+        String publishUrl = courseService.publish(courseId);
         isNullOrEmpty(publishUrl, CommonCode.FAIL);
         return new CoursePublishResult(CommonCode.SUCCESS, publishUrl);
     }
