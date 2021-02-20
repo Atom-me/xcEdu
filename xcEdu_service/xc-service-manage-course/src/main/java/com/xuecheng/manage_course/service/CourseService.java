@@ -137,10 +137,13 @@ public class CourseService extends BaseService {
          * 已发布：202002
          * 已下线：202003
          */
-        saveCoursePubState(courseId, "202002");
+        saveCoursePublishState(courseId, "202002");
 
         // 更新课程索引
-        saveCoursePub(courseId, coursePubRepository.findById(courseId).orElse(null));
+        // 构建coursePub对象
+        CoursePub coursePub = createCoursePub(courseId);
+        //保存coursePub入库
+        saveCoursePub(courseId, coursePub);
 
         // 保存课程计划媒资到待索引表
         saveTeachplanMediaPub(courseId);
@@ -174,16 +177,16 @@ public class CourseService extends BaseService {
     /**
      * 保存课程信息
      *
-     * @param id        课程ID
+     * @param courseId  课程ID
      * @param coursePub 课程信息
      * @return CoursePub
      */
-    public CoursePub saveCoursePub(String id, CoursePub coursePub) {
-        if (StringUtils.isBlank(id)) {
+    public CoursePub saveCoursePub(String courseId, CoursePub coursePub) {
+        if (StringUtils.isBlank(courseId)) {
             ExceptionCast.cast(CourseCode.COURSE_PUBLISH_COURSEIDISNULL);
         }
         CoursePub coursePubNew = null;
-        Optional<CoursePub> coursePubOptional = coursePubRepository.findById(id);
+        Optional<CoursePub> coursePubOptional = coursePubRepository.findById(courseId);
         if (coursePubOptional.isPresent()) {
             coursePubNew = coursePubOptional.get();
         }
@@ -193,7 +196,7 @@ public class CourseService extends BaseService {
 
         BeanUtils.copyProperties(coursePub, coursePubNew);
         //设置主键
-        coursePubNew.setId(id);
+        coursePubNew.setId(courseId);
         //更新时间戳为最新时间
         coursePub.setTimestamp(new Date());
         //发布时间
@@ -208,35 +211,35 @@ public class CourseService extends BaseService {
     /**
      * 创建
      *
-     * @param id
+     * @param courseId 课程ID
      * @return
      */
-    private CoursePub createCoursePub(String id) {
+    private CoursePub createCoursePub(String courseId) {
         CoursePub coursePub = new CoursePub();
-        coursePub.setId(id);
+        coursePub.setId(courseId);
 
         //基础信息
-        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(id);
+        Optional<CourseBase> courseBaseOptional = courseBaseRepository.findById(courseId);
         if (courseBaseOptional.isPresent()) {
             CourseBase courseBase = courseBaseOptional.get();
             BeanUtils.copyProperties(courseBase, coursePub);
         }
         //查询课程图片
-        Optional<CoursePic> picOptional = coursePicRepository.findById(id);
+        Optional<CoursePic> picOptional = coursePicRepository.findById(courseId);
         if (picOptional.isPresent()) {
             CoursePic coursePic = picOptional.get();
             BeanUtils.copyProperties(coursePic, coursePub);
         }
 
         //课程营销信息
-        Optional<CourseMarket> marketOptional = courseMarketRepository.findById(id);
+        Optional<CourseMarket> marketOptional = courseMarketRepository.findById(courseId);
         if (marketOptional.isPresent()) {
             CourseMarket courseMarket = marketOptional.get();
             BeanUtils.copyProperties(courseMarket, coursePub);
         }
 
         //课程计划
-        TeachplanNode teachplanNode = teachplanMapper.findList(id);
+        TeachplanNode teachplanNode = teachplanMapper.findList(courseId);
         //将课程计划转成json
         String teachPlanString = JSON.toJSONString(teachplanNode);
         coursePub.setTeachplan(teachPlanString);
@@ -254,7 +257,7 @@ public class CourseService extends BaseService {
      * @param status   状态值
      * @return CourseBase
      */
-    private CourseBase saveCoursePubState(String courseId, String status) {
+    private CourseBase saveCoursePublishState(String courseId, String status) {
         CourseBase courseBase = courseBaseService.findById(courseId);
         //更新发布状态
         courseBase.setStatus(status);
