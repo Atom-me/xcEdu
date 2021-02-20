@@ -93,7 +93,7 @@ public class EsCourseService extends BaseService {
                     EsCoursePub coursePub =
                             JSON.parseObject(JSON.toJSONString(searchHit.getSource()), EsCoursePub.class);
                     HighlightField nameField = searchHit.getHighlightFields().get("name");
-                    if (nameField != null) {
+                    if (Objects.nonNull(nameField)) {
                         coursePub.setName(nameField.fragments()[0].toString());
                     }
 

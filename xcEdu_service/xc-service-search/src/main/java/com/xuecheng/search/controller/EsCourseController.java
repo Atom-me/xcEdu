@@ -26,6 +26,15 @@ public class EsCourseController extends BaseController implements EsCourseContro
     @Resource
     private EsCourseService esCourseService;
 
+
+    /**
+     * 课程综合搜索
+     *
+     * @param page
+     * @param size
+     * @param courseSearchParam
+     * @return
+     */
     @Override
     @GetMapping("list/{page}/{size}")
     public QueryResponseResult list(@PathVariable int page,

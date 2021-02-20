@@ -15,7 +15,7 @@ import java.util.Map;
 @Api(tags = "课程搜索")
 public interface EsCourseControllerApi {
 
-    @ApiOperation(value = "课程搜索")
+    @ApiOperation(value = "课程综合搜索")
     QueryResponseResult list(int page, int size, CourseSearchParam courseSearchParam);
 
 
