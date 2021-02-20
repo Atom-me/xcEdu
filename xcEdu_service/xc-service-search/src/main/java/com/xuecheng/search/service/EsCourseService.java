@@ -21,7 +21,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -32,22 +31,26 @@ import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class EsCourseService extends BaseService {
 
-    @Autowired
+    @Resource
     private CourseRepository courseRepository;
 
-    @Autowired
+    @Resource
     private ElasticsearchTemplate elasticsearchTemplate;
 
-    @Autowired
+    @Resource
     private ElasticsearchConfig elasticsearchConfig;
 
-    @Autowired
+    @Resource
     private EsTeachplanMediaPubRepository esTeachplanMediaPubRepository;
 
     /**
@@ -176,7 +179,7 @@ public class EsCourseService extends BaseService {
                 new FetchSourceFilter(elasticsearchConfig.getEsCourseMediaSourceField().split(","), null));
 
         // 查询条件
-        nativeSearchQueryBuilder.withQuery(QueryBuilders.termQuery("teachplan_id", Arrays.stream(teachplanIds).reduce((a, b) -> a + "," +b).get()));
+        nativeSearchQueryBuilder.withQuery(QueryBuilders.termQuery("teachplan_id", Arrays.stream(teachplanIds).reduce((a, b) -> a + "," + b).get()));
 
         return elasticsearchTemplate.queryForList(nativeSearchQueryBuilder.build(), EsTeachplanMediaPub.class);
     }

@@ -40,10 +40,16 @@ public class EsCoursePub {
     private String teachmode;
     @Field
     private String description;
+    /**
+     * 图片
+     */
     @Field
-    private String pic;//图片
+    private String pic;
+    /**
+     * 时间戳
+     */
     @Field
-    private Date timestamp;//时间戳
+    private Date timestamp;
     @Field
     private String charge;
     @Field
@@ -56,9 +62,15 @@ public class EsCoursePub {
     private BigDecimal price_old;
     @Field
     private String expires;
+    /**
+     * 课程计划
+     */
     @Field
-    private String teachplan;//课程计划
+    private String teachplan;
+    /**
+     * 课程发布时间
+     */
     @Field
-    private String pub_time;//课程发布时间
+    private String pub_time;
 
 }

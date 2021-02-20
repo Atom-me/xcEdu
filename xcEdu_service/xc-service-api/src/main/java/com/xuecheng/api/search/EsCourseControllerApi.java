@@ -9,16 +9,19 @@ import io.swagger.annotations.ApiOperation;
 
 import java.util.Map;
 
-@Api(value = "课程搜索", description = "课程搜索", tags = {"课程搜索"})
+/**
+ * @author atom
+ */
+@Api(tags = "课程搜索")
 public interface EsCourseControllerApi {
 
-    @ApiOperation("课程搜索")
+    @ApiOperation(value = "课程搜索")
     QueryResponseResult list(int page, int size, CourseSearchParam courseSearchParam);
 
 
-    @ApiOperation("根据id查询课程信息")
+    @ApiOperation(value = "根据id查询课程信息")
     Map<String, EsCoursePub> getAll(String id);
 
-    @ApiOperation("根据课程计划查询媒资信息")
+    @ApiOperation(value = "根据课程计划查询媒资信息")
     EsTeachplanMediaPub getMedia(String teachplanId);
 }

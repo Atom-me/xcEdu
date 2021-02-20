@@ -8,6 +8,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 
+/**
+ * @author atom
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

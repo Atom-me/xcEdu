@@ -7,20 +7,23 @@ import com.xuecheng.framework.domain.search.EsTeachplanMediaPub;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.search.service.EsCourseService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("search/course")
 public class EsCourseController extends BaseController implements EsCourseControllerApi {
 
-    @Autowired
+    @Resource
     private EsCourseService esCourseService;
 
     @Override
