@@ -5,8 +5,8 @@ var sysConfig = {
     backStaticURL: 'http://www.xuecheng.com/static',
     imgUrl:'http://img.xuecheng.com/',
     videoUrl:'http://video.xuecheng.com/video/',
-    openAuthenticate:true,
-    openAuthorize:true
+    openAuthenticate:false,
+    openAuthorize:false
 }
 
 module.exports = sysConfig

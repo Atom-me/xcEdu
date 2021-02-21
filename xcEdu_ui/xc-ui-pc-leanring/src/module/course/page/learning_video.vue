@@ -564,17 +564,17 @@
         this.playerOptions.sources[0].src = video_src
         this.playerOptions.autoplay = true
       },
-      getFirstTeachplan(){ 
+      getFirstTeachplan(){
         for(var i=0;i<this.teachplanList.length;i++) {
           debugger
-          let firstTeachplan = this.teachplanList[i]; 
-          if(firstTeachplan.children && firstTeachplan.children.length>0){ 
+          let firstTeachplan = this.teachplanList[i];
+          if(firstTeachplan.children && firstTeachplan.children.length>0){
             let secondTeachplan = firstTeachplan.children[0]
             return secondTeachplan.id
-            } 
-          } 
-          return ; 
-      },  
+            }
+          }
+          return ;
+      },
       //开始学习
       study(chapter){
         // 获取播放地址
@@ -608,7 +608,7 @@
             this.$message.error("获取课程信息失败，请重新进入此页面！")
             return
           }
- 
+
           let courseInfo = view_course[this.courseId]
           console.log(courseInfo)
           this.coursename = courseInfo.name
@@ -617,12 +617,12 @@
             this.teachplanList = teachplan.children;
 
             if(!this.chapter || this.chapter == '0'){
-              //取出第一个教学计划 
-              this.chapter = this.getFirstTeachplan() 
-              console.log(this.chapter) 
+              //取出第一个教学计划
+              this.chapter = this.getFirstTeachplan()
+              console.log(this.chapter)
             }
-            //开始学习 
-            this.study(this.chapter) 
+            //开始学习
+            this.study(this.chapter)
           }
       })
 
@@ -630,7 +630,7 @@
     mounted() {
 
       //播放测试
-      // this.playvideo("http://video.xuecheng.com/video/hls/lucene.m3u8")
+      this.playvideo("http://video.xuecheng.com/video/hls/test001.m3u8")
 //      this.playvideo("http://video.xuecheng.com/video/5/3/53ac4cca3ddf386c21f4f1cbb4dc9876/hls/53ac4cca3ddf386c21f4f1cbb4dc9876.m3u8")
 
       $(function() {
