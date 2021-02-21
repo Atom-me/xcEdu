@@ -7,6 +7,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
+ * 媒体资源文件管理接口
+ *
  * @author atom
  */
 @Api(tags = "媒资管理接口")
