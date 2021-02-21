@@ -7,15 +7,19 @@ import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_media.service.MediaFileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
+/**
+ * @author atom
+ */
 @RestController
 @RequestMapping("media/file")
 public class MediaFileController extends BaseController implements MediaFileControllerApi {
 
 
-    @Autowired
+    @Resource
     private MediaFileService mediaFileService;
 
     @Override

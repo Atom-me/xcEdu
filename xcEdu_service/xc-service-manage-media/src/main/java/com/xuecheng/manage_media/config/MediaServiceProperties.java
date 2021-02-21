@@ -4,6 +4,9 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author atom
+ */
 @Data
 @Component
 @ConfigurationProperties(prefix = "xc-service-manage-media")
