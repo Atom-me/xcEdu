@@ -61,6 +61,13 @@ public class RabbitMQConfig {
     }
 
 
+    /**
+     * 视频处理并发配置
+     *
+     * @param configurer
+     * @param connectionFactory
+     * @return
+     */
     @Bean("customContainerFactory")
     public SimpleRabbitListenerContainerFactory containerFactory(SimpleRabbitListenerContainerFactoryConfigurer configurer,
                                                                  ConnectionFactory connectionFactory) {

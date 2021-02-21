@@ -10,32 +10,38 @@ import com.xuecheng.framework.utils.Mp4VideoUtil;
 import com.xuecheng.manage_media_process.dao.MediaFileRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Component
 public class MediaProcessTask {
 
-
-    //ffmpeg绝对路径
+    /**
+     * ffmpeg绝对路径
+     */
     @Value("${xc-service-manage-media.ffmpeg-path}")
     private String ffmpeg_path;
 
-    //上传文件根目录
+    /**
+     * 上传文件根目录
+     */
     @Value("${xc-service-manage-media.video-location}")
     private String serverPath;
 
-    @Autowired
+    @Resource
     private MediaFileRepository mediaFileRepository;
 
 
     /**
-     * 接收视频处理消息并处理对应视频格式
+     * 接收视频处理消息并处理对应视频格式（使用自定义配置容器工厂customContainerFactory）
      *
      * @param msg 消息
      */

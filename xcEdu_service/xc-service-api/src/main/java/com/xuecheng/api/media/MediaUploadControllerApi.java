@@ -13,6 +13,16 @@ import org.springframework.web.multipart.MultipartFile;
 public interface MediaUploadControllerApi {
 
 
+    /**
+     * 文件上传钱的准备工作
+     *
+     * @param fileMd5
+     * @param fileName
+     * @param fileSize
+     * @param mimetype
+     * @param fileExt
+     * @return
+     */
     @ApiOperation("文件上传注册")
     ResponseResult register(String fileMd5, String fileName,
                             Long fileSize, String mimetype, String fileExt);
