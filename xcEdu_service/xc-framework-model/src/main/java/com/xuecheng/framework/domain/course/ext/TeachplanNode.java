@@ -15,15 +15,23 @@ import java.util.List;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@ToString(callSuper = true)//打印父类属性
+@ToString(callSuper = true)
 public class TeachplanNode extends Teachplan {
 
     List<TeachplanNode> children;
 
     /**
-     * 媒资信息
+     * 媒体资源文件ID
+     * <p>
+     * 关联 teachplan_media 表的 media_id ，供页面展示
      */
     private String mediaId;
+
+    /**
+     * 媒体资源文件原始文件名
+     * <p>
+     * 关联 teachplan_media 表的 mediaFileOriginalName ，供页面展示
+     */
     private String mediaFileOriginalName;
 
 }

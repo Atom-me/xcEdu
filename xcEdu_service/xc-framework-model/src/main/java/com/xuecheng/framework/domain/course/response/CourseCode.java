@@ -25,18 +25,25 @@ public enum CourseCode implements ResultCode {
     COURSE_MEDIA_TEACHPLAN_GRADE_ERROR(false, 31104, "当前正在操作非法课程级别！"),
     COURSE_MEDIS_NAMEISNULL(false, 31102, "选择的媒资文件名称为空！");
 
-    //操作代码
+    /**
+     * 操作是否成功
+     */
     @ApiModelProperty(value = "操作是否成功", example = "true", required = true)
     boolean success;
 
-    //操作代码
+    /**
+     * 操作代码
+     */
     @ApiModelProperty(value = "操作代码", example = "22001", required = true)
     int code;
-    //提示信息
+
+    /**
+     * 提示信息
+     */
     @ApiModelProperty(value = "操作提示", example = "操作过于频繁！", required = true)
     String message;
 
-    private CourseCode(boolean success, int code, String message) {
+    CourseCode(boolean success, int code, String message) {
         this.success = success;
         this.code = code;
         this.message = message;

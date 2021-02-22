@@ -30,7 +30,7 @@ public class CoursePlanController extends BaseController implements CoursePlanCo
     private CourseService courseService;
 
     /**
-     * 查询指定课程的课程ID
+     * 根据课程ID查询指定课程的课程计划
      *
      * @param courseId 课程ID
      * @return TeachPlanNode
@@ -104,6 +104,13 @@ public class CoursePlanController extends BaseController implements CoursePlanCo
         return ResponseResult.SUCCESS();
     }
 
+
+    /**
+     * 保存课程计划和媒体资源文件的关联
+     *
+     * @param teachplanMedia
+     * @return
+     */
     @Override
     @PostMapping("savemedia")
     public ResponseResult saveMedia(@RequestBody TeachplanMedia teachplanMedia) {

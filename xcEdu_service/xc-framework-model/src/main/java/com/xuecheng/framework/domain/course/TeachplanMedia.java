@@ -8,30 +8,49 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by admin on 2018/2/7.
+ * @author admin
+ * @date 2018/2/7
  */
 @Data
 @ToString
 @Entity
-@Table(name="teachplan_media")
+@Table(name = "teachplan_media")
 @GenericGenerator(name = "jpa-assigned", strategy = "assigned")
 public class TeachplanMedia implements Serializable {
+
     private static final long serialVersionUID = -916357110051689485L;
+
+    /**
+     * 课程计划id
+     */
     @Id
     @GeneratedValue(generator = "jpa-assigned")
-    @Column(name="teachplan_id")
+    @Column(name = "teachplan_id")
     private String teachplanId;
 
-    @Column(name="media_id")
+    /**
+     * 媒资文件id
+     */
+    @Column(name = "media_id")
     private String mediaId;
 
-    @Column(name="media_fileoriginalname")
+    /**
+     * 媒资文件的原始名称
+     */
+    @Column(name = "media_fileoriginalname")
     private String mediaFileOriginalName;
 
-    @Column(name="media_url")
+    /**
+     * 媒资文件访问地址(m3u8文件地址)
+     * 5/f/5fbb79a2016c0eb609ecd0cd3dc48016/hls/5fbb79a2016c0eb609ecd0cd3dc48016.m3u8
+     */
+    @Column(name = "media_url")
     private String mediaUrl;
 
-    @Column(name="courseid")
+    /**
+     * 课程Id
+     */
+    @Column(name = "courseid")
     private String courseId;
 
 }

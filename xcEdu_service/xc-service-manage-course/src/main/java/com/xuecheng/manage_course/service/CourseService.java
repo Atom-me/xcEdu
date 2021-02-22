@@ -305,9 +305,9 @@ public class CourseService extends BaseService {
         Teachplan teachplan = coursePlanRepository.findById(teachplanMedia.getTeachplanId()).orElse(null);
         isNullOrEmpty(teachplan, CourseCode.COURSE_MEDIS_TEACHPLAN_IS_NULL);
 
-        // 只允许叶子节点选择视频
+        // 总共三级，只允许叶子节点选择视频
         String grade = teachplan.getGrade();
-        if (StringUtils.isEmpty(grade) || !grade.equals("3")) {
+        if (StringUtils.isEmpty(grade) || !"3".equals(grade)) {
             ExceptionCast.cast(CourseCode.COURSE_MEDIA_TEACHPLAN_GRADE_ERROR);
         }
         TeachplanMedia media;
