@@ -23,7 +23,7 @@ public class QueryResult<T> {
      */
     private List<T> list;
     /**
-     *
+     * 总数据量
      */
     private long total;
 }

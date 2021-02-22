@@ -23,6 +23,9 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Service
 public class MediaUploadService extends BaseService {
@@ -145,7 +148,8 @@ public class MediaUploadService extends BaseService {
         }
         // 创建合并文件
         File mergeFile = new File(getFilePath(fileMd5, fileExt));
-        if (mergeFile.exists()) {// 删除原有文件
+        // 删除原有文件
+        if (mergeFile.exists()) {
             mergeFile.delete();
         } else {
             try {

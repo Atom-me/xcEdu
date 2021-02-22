@@ -74,11 +74,8 @@ public class HlsVideoUtil extends  VideoUtil {
             builder.redirectErrorStream(true);
             Process p = builder.start();
             outstring = waitFor(p);
-
         } catch (Exception ex) {
-
             ex.printStackTrace();
-
         }
         //通过查看视频时长判断是否成功
         Boolean check_video_time = check_video_time(video_path, m3u8folder_path + m3u8_name);
@@ -103,11 +100,11 @@ public class HlsVideoUtil extends  VideoUtil {
      */
     public List<String> get_ts_list() {
 //        String m3u8_name = video_name.substring(0, video_name.lastIndexOf("."))+".m3u8";
-        List<String> fileList = new ArrayList<String>();
-        List<String> tsList = new ArrayList<String>();
+        List<String> fileList = new ArrayList<>();
+        List<String> tsList = new ArrayList<>();
         String m3u8file_path =m3u8folder_path + m3u8_name;
         BufferedReader br = null;
-        String str = null;
+        String str;
         String bottomline = "";
         try {
             br = new BufferedReader(new FileReader(m3u8file_path));

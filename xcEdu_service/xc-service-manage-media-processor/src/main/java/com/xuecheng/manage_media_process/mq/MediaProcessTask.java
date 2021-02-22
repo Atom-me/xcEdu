@@ -9,6 +9,7 @@ import com.xuecheng.framework.utils.HlsVideoUtil;
 import com.xuecheng.framework.utils.Mp4VideoUtil;
 import com.xuecheng.manage_media_process.dao.MediaFileRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -59,12 +60,15 @@ public class MediaProcessTask {
         }
         // 判断文件类型
         String fileType = mediaFile.getFileType();
-        if (fileType == null || !fileType.equals("avi")) {//目前只处理avi文件
-            mediaFile.setProcessStatus("303004");//处理状态为无需处理
+        //目前只处理avi文件
+        if (StringUtils.isBlank(fileType) || !fileType.equals("avi")) {
+            //处理状态为无需处理
+            mediaFile.setProcessStatus("303004");
             mediaFileRepository.save(mediaFile);
             return;
         } else {
-            mediaFile.setProcessStatus("303001");//处理状态为未处理
+            //处理状态为未处理
+            mediaFile.setProcessStatus("303001");
             mediaFileRepository.save(mediaFile);
         }
 
@@ -107,7 +111,7 @@ public class MediaProcessTask {
         //获取m3u8列表
         List<String> ts_list = hlsVideoUtil.get_ts_list();
         //更新处理状态为成功
-        mediaFile.setProcessStatus("303002");//处理状态为处理成功
+        mediaFile.setProcessStatus("303002");
         MediaFileProcess_m3u8 mediaFileProcess_m3u8 = new MediaFileProcess_m3u8();
         mediaFileProcess_m3u8.setTslist(ts_list);
         mediaFile.setMediaFileProcess_m3u8(mediaFileProcess_m3u8);
