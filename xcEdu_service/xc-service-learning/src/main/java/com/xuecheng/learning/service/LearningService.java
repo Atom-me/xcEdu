@@ -14,23 +14,27 @@ import com.xuecheng.learning.dao.XcLearningCourseRepository;
 import com.xuecheng.learning.dao.XcTaskHisRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * @author atom
+ */
 @Service
 public class LearningService {
 
-    @Autowired
-    CourseSearchClient courseSearchClient;
+    @Resource
+    private CourseSearchClient courseSearchClient;
 
-    @Autowired
+    @Resource
     private XcLearningCourseRepository xcLearningCourseRepository;
 
-    @Autowired
+    @Resource
     private XcTaskHisRepository xcTaskHisRepository;
 
     /**
@@ -46,7 +50,7 @@ public class LearningService {
 
         // 调用搜索服务查询
         EsTeachplanMediaPub teachplanMediaPub = courseSearchClient.getMedia(teachplanId);
-        if (teachplanMediaPub == null || StringUtils.isEmpty(teachplanMediaPub.getMedia_url())) {
+        if (Objects.isNull(teachplanMediaPub) || StringUtils.isEmpty(teachplanMediaPub.getMedia_url())) {
             //获取视频播放地址出错
             ExceptionCast.cast(LearningCode.LEARNING_GETMEDIA_ERROR);
         }
@@ -85,7 +89,8 @@ public class LearningService {
             return new ResponseResult(CommonCode.SUCCESS);
         }
         XcLearningCourse xcLearningCourse = xcLearningCourseRepository.findXcLearningCourseByUserIdAndCourseId(userId, courseId);
-        if (xcLearningCourse == null) {//没有选课记录则添加
+        if (Objects.isNull(xcLearningCourse)) {
+            //没有选课记录则添加
             xcLearningCourse = new XcLearningCourse();
             xcLearningCourse.setUserId(userId);
             xcLearningCourse.setCourseId(courseId);
@@ -94,7 +99,8 @@ public class LearningService {
             xcLearningCourse.setEndTime(endTime);
             xcLearningCourse.setStatus("501001");
             xcLearningCourseRepository.save(xcLearningCourse);
-        } else {//有选课记录则更新日期
+        } else {
+            //有选课记录则更新日期
             xcLearningCourse.setValid(valid);
             xcLearningCourse.setStartTime(startTime);
             xcLearningCourse.setEndTime(endTime);

@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
+ * 可选计划媒体资源信息表
+ *
  * @author admin
  * @date 2018/2/7
  */
 @Data
-@ToString
 @Entity
 @Table(name = "teachplan_media")
 @GenericGenerator(name = "jpa-assigned", strategy = "assigned")

@@ -17,7 +17,9 @@ import java.io.Serializable;
 @Table(name = "teachplan")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class Teachplan implements Serializable {
+
     private static final long serialVersionUID = -916357110051689485L;
+
     @Id
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32)
@@ -25,7 +27,7 @@ public class Teachplan implements Serializable {
     private String pname;
     private String parentid;
     /**
-     * 层级，分为1、2、3级
+     * 层级，分为1、2、3级，共分三级
      */
     private String grade;
     /**

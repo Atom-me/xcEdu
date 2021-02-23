@@ -11,12 +11,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
+ * 课程信息ES索引
+ *
  * @author atom
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(indexName = "xc_course", type = "doc", shards = 1)
+@Document(indexName = "xc_course", type = "doc", shards = 1, replicas = 0)
 public class EsCoursePub {
 
     private static final long serialVersionUID = -916357110051689487L;

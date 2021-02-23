@@ -103,7 +103,7 @@ public class MediaProcessTask {
         // 生成m3u8文件
         HlsVideoUtil hlsVideoUtil = new HlsVideoUtil(ffmpeg_path, video_path, m3u8_name, m3u8folder_path);
         String result = hlsVideoUtil.generateM3u8();
-        if (result == null || !result.equals("success")) {
+        if (StringUtils.isBlank(result) || !result.equals("success")) {
             //操作失败写入处理日志
             processFail(result, mediaFile);
             return false;

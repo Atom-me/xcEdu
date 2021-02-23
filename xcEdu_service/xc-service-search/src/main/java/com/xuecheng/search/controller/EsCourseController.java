@@ -43,12 +43,24 @@ public class EsCourseController extends BaseController implements EsCourseContro
         return esCourseService.findList(page, size, courseSearchParam);
     }
 
+    /**
+     * 查询课程信息，包含课程学习计划
+     *
+     * @param courseId 课程ID
+     * @return
+     */
     @Override
     @GetMapping("getall/{id}")
-    public Map<String, EsCoursePub> getAll(@PathVariable String id) {
-        return esCourseService.getAll(id);
+    public Map<String, EsCoursePub> getAll(@PathVariable("id") String courseId) {
+        return esCourseService.getAll(courseId);
     }
 
+    /**
+     * 学习页面查询课程计划媒体资源接口
+     *
+     * @param teachplanId 课程计划ID
+     * @return
+     */
     @Override
     @GetMapping("getmedia/{teachplanId}")
     public EsTeachplanMediaPub getMedia(@PathVariable String teachplanId) {

@@ -148,6 +148,7 @@ public class EsCourseService extends BaseService {
     }
 
     /**
+     * 使用ES客户端向ES请求查询索引信息
      * 查询课程信息
      *
      * @param id 课程id
@@ -157,7 +158,7 @@ public class EsCourseService extends BaseService {
         Map<String, EsCoursePub> result = new HashMap<>();
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
 
-        // 查询条件
+        // 查询条件，使用termQuery
         nativeSearchQueryBuilder.withQuery(QueryBuilders.termQuery("id", id));
 
         AggregatedPage<EsCoursePub> queryForPage = elasticsearchTemplate.queryForPage(nativeSearchQueryBuilder.build(), EsCoursePub.class);

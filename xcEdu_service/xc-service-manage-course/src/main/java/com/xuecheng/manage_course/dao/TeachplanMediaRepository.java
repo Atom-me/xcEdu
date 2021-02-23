@@ -5,6 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**
+ * @author atom
+ */
 public interface TeachplanMediaRepository extends JpaRepository<TeachplanMedia, String> {
+
     List<TeachplanMedia> findByCourseId(String courseId);
 }

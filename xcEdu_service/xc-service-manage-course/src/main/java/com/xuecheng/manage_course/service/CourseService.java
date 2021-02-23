@@ -168,6 +168,7 @@ public class CourseService extends BaseService {
         teachplanMediaList.forEach(teachplanMedia -> {
             TeachplanMediaPub teachplanMediaPub = new TeachplanMediaPub();
             BeanUtils.copyProperties(teachplanMedia, teachplanMediaPub);
+            teachplanMediaPub.setTimestamp(new Date());
             teachplanMediaPubList.add(teachplanMediaPub);
         });
 
@@ -236,6 +237,11 @@ public class CourseService extends BaseService {
         if (marketOptional.isPresent()) {
             CourseMarket courseMarket = marketOptional.get();
             BeanUtils.copyProperties(courseMarket, coursePub);
+        } else {
+            //如果没有查到课程营销信息，则设为免费
+            coursePub.setCharge("203001");
+            //如果没有查到课程营销信息，则设为永久有效
+            coursePub.setValid("204001");
         }
 
         //课程计划

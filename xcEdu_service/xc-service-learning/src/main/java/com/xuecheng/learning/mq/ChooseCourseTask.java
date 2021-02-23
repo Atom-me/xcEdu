@@ -8,30 +8,32 @@ import com.xuecheng.learning.service.LearningService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 @Slf4j
 @Component
 public class ChooseCourseTask {
 
 
-    @Autowired
-    LearningService learningService;
+    @Resource
+    private LearningService learningService;
 
-    @Autowired
-    RabbitTemplate rabbitTemplate;
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 接收选课任务
      */
     @RabbitListener(queues = {RabbitMQConfig.XC_LEARNING_ADDCHOOSECOURSE})
-    public void receiveChoosecourseTask(XcTask xcTask) throws IOException {
+    public void receiveChoosecourseTask(XcTask xcTask) {
         log.info("receive choose course task,taskId:{}", xcTask.getId());
 
         //接收到 的消息id
@@ -46,7 +48,7 @@ public class ChooseCourseTask {
             String valid = (String) map.get("valid");
             Date startTime = null;
             Date endTime = null;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY‐MM‐dd HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy‐MM‐dd HH:mm:ss");
             if (map.get("startTime") != null) {
                 startTime = dateFormat.parse((String) map.get("startTime"));
             }
