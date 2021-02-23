@@ -667,6 +667,7 @@ export default {
         let teachplan = JSON.parse(courseInfo.teachplan);
         this.teachplanList = teachplan.children;
 
+        //进入页面后判断：如果课程计划ID为0则取出本课程第一个课程计划的ID，并播放第一个课程计划的视频
         if (!this.chapter || this.chapter == '0') {
           //取出第一个教学计划
           this.chapter = this.getFirstTeachplan()
@@ -680,7 +681,7 @@ export default {
   },
   mounted() {
     //播放测试
-    this.playvideo("http://video.xuecheng.com/video/hls/test001.m3u8")
+    // this.playvideo("http://video.xuecheng.com/video/hls/test001.m3u8")
 //      this.playvideo("http://video.xuecheng.com/video/5/3/53ac4cca3ddf386c21f4f1cbb4dc9876/hls/53ac4cca3ddf386c21f4f1cbb4dc9876.m3u8")
 
     $(function () {

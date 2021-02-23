@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @author atom
  */
 @RestController
-@RequestMapping("learning")
+@RequestMapping("learning/course")
 public class CourseLearningController implements CourseLearningControllerApi {
 
     @Resource
