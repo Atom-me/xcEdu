@@ -19,10 +19,10 @@ spring:
       minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（毫秒）
 #rabbitmq配置
   rabbitmq:
-    host: 192.168.136.110
+    host: 192.168.56.1
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: admin
     publisher-confirms: true
     virtual-host: /
 
@@ -31,7 +31,7 @@ eureka:
     registerWithEureka: true #服务注册开关
     fetchRegistry: true #服务发现开关
     serviceUrl: #Eureka客户端与Eureka服务端进行交互的地址，多个中间用逗号分隔
-      defaultZone: http://localhost:50101/eureka/,http://localhost:50102/eureka/
+      defaultZone: http://localhost:50101/eureka/
   instance:
     prefer-ip-address:  true  #将自己的ip地址注册到Eureka服务中
     ip-address: 127.0.0.1

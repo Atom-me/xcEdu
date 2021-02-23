@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 历史任务表（已经完成的任务）
+ *
  * @author mrt
  * @date 2018/4/4
  */

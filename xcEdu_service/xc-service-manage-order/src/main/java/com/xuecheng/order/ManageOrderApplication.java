@@ -13,12 +13,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
 
+/**
+ * @author atom
+ */
 @EnableDiscoveryClient
 @EnableFeignClients
-@EntityScan(value={"com.xuecheng.framework.domain.order","com.xuecheng.framework.domain.task"})//扫描实体类
-@ComponentScan(basePackages={"com.xuecheng.api"})//扫描接口
-@ComponentScan(basePackages={"com.xuecheng.framework"})//扫描framework中通用类
-@ComponentScan(basePackages={"com.xuecheng.order"})//扫描本项目下的所有类
+@EntityScan(value = {"com.xuecheng.framework.domain.order", "com.xuecheng.framework.domain.task"})//扫描实体类
+@ComponentScan(basePackages = {"com.xuecheng.api"})//扫描接口
+@ComponentScan(basePackages = {"com.xuecheng.framework"})//扫描framework中通用类
+@ComponentScan(basePackages = {"com.xuecheng.order"})//扫描本项目下的所有类
 @SpringBootApplication
 @EnableScheduling
 public class ManageOrderApplication {

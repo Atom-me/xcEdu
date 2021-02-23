@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -17,12 +18,14 @@ import java.util.List;
 
 /**
  * 定时发送消息到MQ
+ *
+ * @author atom
  */
 @Slf4j
 @Component
 public class ChooseCourseTask {
 
-    @Autowired
+    @Resource
     private TaskService taskService;
 
     /**
@@ -51,13 +54,12 @@ public class ChooseCourseTask {
      */
     @RabbitListener(queues = {RabbitMQConfig.XC_LEARNING_FINISHADDCHOOSECOURSE})
     public void receiveFinishChoosecourseTask(XcTask task) throws IOException {
-        log.info("receiveChoosecourseTask...{}",task.getId());
+        log.info("receiveChoosecourseTask...{}", task.getId());
         //接收到 的消息id
         String id = task.getId();
         //删除任务，添加历史任务
         taskService.finishTask(id);
     }
-
 
 
 }
