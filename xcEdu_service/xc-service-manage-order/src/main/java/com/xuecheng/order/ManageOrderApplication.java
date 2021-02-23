@@ -23,9 +23,9 @@ import org.springframework.web.client.RestTemplate;
 @ComponentScan(basePackages = {"com.xuecheng.framework"})//扫描framework中通用类
 @ComponentScan(basePackages = {"com.xuecheng.order"})//扫描本项目下的所有类
 @SpringBootApplication
-@EnableScheduling
+@EnableScheduling//开启任务调度支持
 public class ManageOrderApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(ManageOrderApplication.class, args);
     }
 

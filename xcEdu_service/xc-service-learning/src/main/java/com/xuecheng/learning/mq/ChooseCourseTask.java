@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.Map;
 
 /**
+ * 接收选课任务消息
+ *
  * @author atom
  */
 @Slf4j
@@ -66,7 +68,6 @@ public class ChooseCourseTask {
                 log.info("send finish choose course taskId:{}", id);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             log.error("send finish choose course taskId:{}", id);
         }
     }

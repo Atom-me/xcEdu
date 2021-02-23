@@ -10,17 +10,24 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.util.concurrent.Executor;
 
+/**
+ * @author atom
+ */
 @Configuration
 public class AsyncTaskConfig implements SchedulingConfigurer, AsyncConfigurer {
 
-    // 线程池线程数量
+    /**
+     * 线程池线程数量
+     */
     private int corePoolSize = 5;
 
     @Bean
     public ThreadPoolTaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.initialize();// 初始化线程池
-        scheduler.setPoolSize(corePoolSize);// 线程池容量
+        //初始化线程池
+        scheduler.initialize();
+        //线程池容量
+        scheduler.setPoolSize(corePoolSize);
         return scheduler;
     }
 
