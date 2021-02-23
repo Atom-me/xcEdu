@@ -182,7 +182,7 @@
             <div class="article-cont-catalog">
                 <div class="article-left-box">
                     <div class="content">
-			<#if (teachplanNode.children)??>
+			            <#if (teachplanNode.children)??>
                             <#list teachplanNode.children as firstNode>
                                 <div class="item">
                                     <div class="title act"><i class="i-chevron-top"></i>${firstNode.pname}</div>
