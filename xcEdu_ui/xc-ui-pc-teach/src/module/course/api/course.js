@@ -74,3 +74,13 @@ export const findCourseView = courseId => {
 export const savemedia = teachplanMedia => {
   return http.requestPost(apiUrl+'/course/teachplan/savemedia',teachplanMedia);
 }
+
+/*获取课程营销信息*/
+export const getCourseMarketById = id => {
+  return http.requestQuickGet(apiUrl+'/course/coursemarket/get/'+id)
+}
+
+/*更新课程营销信息*/
+export const updateCourseMarket =(id,courseMarket) => {
+  return http.requestPost(apiUrl+'/course/coursemarket/update/'+id,courseMarket)
+}
