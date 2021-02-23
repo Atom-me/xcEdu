@@ -168,18 +168,18 @@ public class EsCourseService extends BaseService {
     }
 
     /**
-     * 查询课程媒资信息
+     * 查询课程计划媒资信息,支持多个课程计划ID查询
      *
      * @param teachplanIds 课程计划ID
      */
     public List<EsTeachplanMediaPub> getMedia(String[] teachplanIds) {
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
 
-        // 结果过滤
+        // 结果过滤，过滤字段
         nativeSearchQueryBuilder.withSourceFilter(
                 new FetchSourceFilter(elasticsearchConfig.getEsCourseMediaSourceField().split(","), null));
 
-        // 查询条件
+        // 查询条件，设置termQuery根据多个ID查询
         nativeSearchQueryBuilder.withQuery(QueryBuilders.termQuery("teachplan_id", Arrays.stream(teachplanIds).reduce((a, b) -> a + "," + b).get()));
 
         return elasticsearchTemplate.queryForList(nativeSearchQueryBuilder.build(), EsTeachplanMediaPub.class);

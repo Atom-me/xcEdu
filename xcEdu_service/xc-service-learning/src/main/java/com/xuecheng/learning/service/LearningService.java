@@ -46,7 +46,7 @@ public class LearningService {
      */
     public GetMediaResult getMedia(String courseId, String teachplanId) {
 
-        // TODO 校验学生的学习权限, 是否资费
+        // TODO 校验学生的学习权限, 是否资费，courseId
 
         // 调用搜索服务查询
         EsTeachplanMediaPub teachplanMediaPub = courseSearchClient.getMedia(teachplanId);

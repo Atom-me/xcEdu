@@ -37,6 +37,10 @@ public class EsTeachplanMediaPub {
     @Field
     private String media_id;
 
+    /**
+     * 媒资文件访问地址(m3u8文件地址)
+     * 5/f/5fbb79a2016c0eb609ecd0cd3dc48016/hls/5fbb79a2016c0eb609ecd0cd3dc48016.m3u8
+     */
     @Field
     private String media_url;
 

@@ -10,6 +10,8 @@ import java.util.Enumeration;
 
 /**
  * feign拦截器, 调用前传递header(JWT)
+ *
+ * @author atom
  */
 public class FeignClientInterceptor implements RequestInterceptor {
     @Override
