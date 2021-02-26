@@ -11,11 +11,14 @@ import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 
+/**
+ * @author atom
+ */
 @EnableDiscoveryClient
 @EnableFeignClients
 @EntityScan("com.xuecheng.framework.domain.ucenter")//扫描实体类
-@ComponentScan(basePackages={"com.xuecheng.api"})//扫描接口
-@ComponentScan(basePackages={"com.xuecheng.framework"})//扫描common下的所有类
+@ComponentScan(basePackages = {"com.xuecheng.api"})//扫描接口
+@ComponentScan(basePackages = {"com.xuecheng.framework"})//扫描common下的所有类
 @SpringBootApplication
 public class UcenterAuthApplication {
     public static void main(String[] args) {

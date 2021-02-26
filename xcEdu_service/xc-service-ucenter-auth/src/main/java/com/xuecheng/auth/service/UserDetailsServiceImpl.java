@@ -4,7 +4,6 @@ import com.xuecheng.auth.client.UserClient;
 import com.xuecheng.framework.domain.ucenter.XcMenu;
 import com.xuecheng.framework.domain.ucenter.ext.XcUserExt;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,17 +15,22 @@ import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * @author atom
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
+    @Resource
     private ClientDetailsService clientDetailsService;
 
-    @Autowired
+    @Resource
     private UserClient userClient;
 
     @Override
@@ -34,9 +38,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         //取出身份，如果身份为空说明没有认证
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //没有认证统一采用httpbasic认证，httpbasic中存储了client_id和client_secret，开始认证client_id和client_secret
-        if (authentication == null) {
+        if (Objects.isNull(authentication)) {
             ClientDetails clientDetails = clientDetailsService.loadClientByClientId(username);
-            if (clientDetails != null) {
+            if (Objects.nonNull(clientDetails)) {
                 //密码
                 String clientSecret = clientDetails.getClientSecret();
                 return new User(username, clientSecret, AuthorityUtils.commaSeparatedStringToAuthorityList(""));

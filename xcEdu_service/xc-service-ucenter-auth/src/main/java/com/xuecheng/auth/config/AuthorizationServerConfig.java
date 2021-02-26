@@ -102,7 +102,12 @@ class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
         return converter;
     }
 
-    //授权服务器端点配置
+    /**
+     * 授权服务器端点配置
+     *
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         /*Collection<TokenEnhancer> tokenEnhancers = applicationContext.getBeansOfType(TokenEnhancer.class).values();

@@ -5,7 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * Created by mrt on 2018/5/21.
+ * @author mrt
+ * @date 2018/5/21
  */
 @Data
 @ToString

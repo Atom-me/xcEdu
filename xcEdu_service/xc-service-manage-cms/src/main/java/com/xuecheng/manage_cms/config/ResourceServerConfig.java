@@ -17,21 +17,35 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+/**
+ * @author atom
+ */
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    //公钥
+    /**
+     * 公钥
+     */
     private static final String PUBLIC_KEY = "publickey.txt";
 
-    //定义JwtTokenStore，使用jwt令牌
+    /**
+     * 定义JwtTokenStore，使用jwt令牌
+     *
+     * @param jwtAccessTokenConverter
+     * @return
+     */
     @Bean
     public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
         return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
-    //定义JJwtAccessTokenConverter，使用jwt令牌
+    /**
+     * 定义JJwtAccessTokenConverter，使用jwt令牌
+     *
+     * @return
+     */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -56,7 +70,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
     }
 
-    //Http安全配置，对每个到达系统的http请求链接进行校验
+    /**
+     * Http安全配置，对每个到达系统的http请求链接进行校验
+     *
+     * @param http
+     * @throws Exception
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         //所有请求必须认证通过
@@ -64,7 +83,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui",
                         "/swagger-resources", "/swagger-resources/configuration/security",
-                        "/swagger-ui.html", "/webjars/**","/cms/**","/sys/**").permitAll()
+                        "/swagger-ui.html", "/webjars/**", "/cms/**", "/sys/**").permitAll()
                 .anyRequest().authenticated();
 
     }

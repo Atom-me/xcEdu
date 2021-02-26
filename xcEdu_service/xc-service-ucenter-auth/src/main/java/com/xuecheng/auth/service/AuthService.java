@@ -8,7 +8,6 @@ import com.xuecheng.framework.exception.ExceptionCast;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -25,10 +24,15 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @author atom
+ */
 @Service
 public class AuthService {
 
@@ -37,20 +41,28 @@ public class AuthService {
     @Value("${auth.tokenValiditySeconds}")
     int tokenValiditySeconds;
 
-    @Autowired
+    @Resource
     private RestTemplate restTemplate;
 
-    @Autowired
+    @Resource
     private LoadBalancerClient loadBalancerClient;
 
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    //认证方法
+    /**
+     * 认证方法
+     *
+     * @param username
+     * @param password
+     * @param clientId
+     * @param clientSecret
+     * @return
+     */
     public AuthToken login(String username, String password, String clientId, String clientSecret) {
         //申请令牌
         AuthToken authToken = applyToken(username, password, clientId, clientSecret);
-        if (authToken == null) {
+        if (Objects.isNull(authToken)) {
             ExceptionCast.cast(AuthCode.AUTH_LOGIN_APPLY_TOKEN_FAIL);
         }
         //将 token存储到redis
@@ -63,7 +75,14 @@ public class AuthService {
         return authToken;
     }
 
-    //存储令牌到redis
+    /**
+     * 存储令牌到redis
+     *
+     * @param access_token
+     * @param content
+     * @param ttl
+     * @return
+     */
     private boolean saveToken(String access_token, String content, long ttl) {
         //令牌名称
         String name = "user_token:" + access_token;
@@ -74,13 +93,21 @@ public class AuthService {
         return expire > 0;
     }
 
-    //认证方法
+    /**
+     * 认证方法,申请令牌
+     *
+     * @param username
+     * @param password
+     * @param clientId
+     * @param clientSecret
+     * @return
+     */
     private AuthToken applyToken(String username, String password, String clientId, String
             clientSecret) {
         //选中认证服务的地址
         ServiceInstance serviceInstance =
                 loadBalancerClient.choose(XcServiceList.XC_SERVICE_UCENTER_AUTH);
-        if (serviceInstance == null) {
+        if (Objects.isNull(serviceInstance)) {
             LOGGER.error("choose an auth instance fail");
             ExceptionCast.cast(AuthCode.AUTH_LOGIN_AUTHSERVER_NOTFOUND);
         }
@@ -100,7 +127,6 @@ public class AuthService {
         header.add("Authorization", httpbasic(clientId, clientSecret));
         //指定 restTemplate当遇到400或401响应时候也不要抛出异常，也要正常返回值
         restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
-
             @Override
             public void handleError(ClientHttpResponse response) throws IOException {
                 //当响应的值为400或401时候也要正常响应，不要抛出异常
@@ -112,9 +138,8 @@ public class AuthService {
         Map map = null;
         try {
             //http请求spring security的申请令牌接口
-            ResponseEntity<Map> mapResponseEntity = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<MultiValueMap<String, String>>(formData, header), Map.class);
+            ResponseEntity<Map> mapResponseEntity = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<>(formData, header), Map.class);
             map = mapResponseEntity.getBody();
-
         } catch (RestClientException e) {
             e.printStackTrace();
             LOGGER.error("request oauth_token_password error: {}", e.getMessage());

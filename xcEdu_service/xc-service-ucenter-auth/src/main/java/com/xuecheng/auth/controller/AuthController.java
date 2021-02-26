@@ -12,7 +12,6 @@ import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.framework.utils.CookieUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class AuthController implements AuthControllerApi {
@@ -42,14 +43,14 @@ public class AuthController implements AuthControllerApi {
     @Value("${auth.tokenValiditySeconds}")
     private int tokenValiditySeconds;
 
-    @Autowired
+    @Resource
     private AuthService authService;
 
     @Override
     @PostMapping("/userlogin")
     public LoginResult login(LoginRequest loginRequest) {
         //校验账号是否输入
-        if (loginRequest == null || StringUtils.isEmpty(loginRequest.getUsername())) {
+        if (Objects.isNull(loginRequest) || StringUtils.isEmpty(loginRequest.getUsername())) {
             ExceptionCast.cast(AuthCode.AUTH_USERNAME_NONE);
         }
         //校验密码是否输入
@@ -66,7 +67,11 @@ public class AuthController implements AuthControllerApi {
     }
 
 
-    //将令牌保存到cookie
+    /**
+     * 将令牌保存到cookie
+     *
+     * @param token
+     */
     private void saveCookie(String token) {
         HttpServletResponse response = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getResponse();
@@ -100,14 +105,14 @@ public class AuthController implements AuthControllerApi {
     public JwtResult userjwt() {
         String access_token = getTokenFormCookie();
         AuthToken authToken = authService.getUserToken(access_token);
-        if(authToken == null){
-            return new JwtResult(CommonCode.FAIL,null);
+        if (authToken == null) {
+            return new JwtResult(CommonCode.FAIL, null);
         }
-        return new JwtResult(CommonCode.SUCCESS,authToken.getJwt_token());
+        return new JwtResult(CommonCode.SUCCESS, authToken.getJwt_token());
     }
 
     //从cookie中读取访问令牌
-    private String getTokenFormCookie(){
+    private String getTokenFormCookie() {
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getRequest();
         Map<String, String> cookieMap = CookieUtil.readCookie(request, "uid");
