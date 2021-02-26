@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/userlogin", "/userlogout", "/userjwt");
     }
 
@@ -27,7 +27,11 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    //采用bcrypt对密码进行编码
+    /**
+     * 采用bcrypt对密码进行编码
+     *
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

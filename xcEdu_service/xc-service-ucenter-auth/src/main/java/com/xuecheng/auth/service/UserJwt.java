@@ -7,8 +7,11 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
+/**
+ * @author atom
+ */
 @Data
-@ToString
+@ToString(callSuper = true)
 public class UserJwt extends User {
 
     private String id;

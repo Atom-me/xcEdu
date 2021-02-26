@@ -16,7 +16,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -26,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +38,9 @@ public class AuthService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthService.class);
 
+    /**
+     * JWT token有效时间
+     */
     @Value("${auth.tokenValiditySeconds}")
     int tokenValiditySeconds;
 
@@ -104,15 +107,22 @@ public class AuthService {
      */
     private AuthToken applyToken(String username, String password, String clientId, String
             clientSecret) {
-        //选中认证服务的地址
+        //从Eureka中获取认证服务的地址
         ServiceInstance serviceInstance =
                 loadBalancerClient.choose(XcServiceList.XC_SERVICE_UCENTER_AUTH);
         if (Objects.isNull(serviceInstance)) {
             LOGGER.error("choose an auth instance fail");
             ExceptionCast.cast(AuthCode.AUTH_LOGIN_AUTHSERVER_NOTFOUND);
         }
-        //获取令牌的url
-        String path = serviceInstance.getUri().toString() + "/auth/oauth/token";
+        //此地址就是 http://ip:port
+        String uri = serviceInstance.getUri().toString();
+
+        /**
+         * /auth 为 ucenter-auth的contextPath
+         * /oauth/token 为 Spring security提供的默认的 令牌申请endpoint
+         */
+        //令牌申请地址的url
+        String path = uri + "/auth/oauth/token";
 
         //定义body
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
@@ -122,7 +132,7 @@ public class AuthService {
         formData.add("username", username);
         //密码
         formData.add("password", password);
-        //定义头
+        //定义header 加入 HttpBasic认证Authorization
         MultiValueMap<String, String> header = new LinkedMultiValueMap<>();
         header.add("Authorization", httpbasic(clientId, clientSecret));
         //指定 restTemplate当遇到400或401响应时候也不要抛出异常，也要正常返回值
@@ -137,7 +147,7 @@ public class AuthService {
         });
         Map map = null;
         try {
-            //http请求spring security的申请令牌接口
+            //http 请求 spring security的申请令牌接口
             ResponseEntity<Map> mapResponseEntity = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<>(formData, header), Map.class);
             map = mapResponseEntity.getBody();
         } catch (RestClientException e) {
@@ -150,7 +160,7 @@ public class AuthService {
         if (map == null ||
                 map.get("access_token") == null ||
                 map.get("refresh_token") == null ||
-                map.get("jti") == null) {//jti是jwt令牌的唯一标识作为用户身份令牌
+                map.get("jti") == null) {//jti (JWT ID)：编号
             String error_description = (String) map.get("error_description");
 
             if (StringUtils.isNotEmpty(error_description)) {
@@ -168,7 +178,7 @@ public class AuthService {
         String jwt_token = (String) map.get("access_token");
         //刷新令牌(jwt)
         String refresh_token = (String) map.get("refresh_token");
-        //jti，作为用户的身份标识
+        //jti，作为用户的身份标识[ jti (JWT ID)：编号 ]
         String access_token = (String) map.get("jti");
         authToken.setJwt_token(jwt_token);
         authToken.setAccess_token(access_token);
@@ -176,13 +186,18 @@ public class AuthService {
         return authToken;
     }
 
-    //获取httpbasic认证串
+    /**
+     * 获取httpbasic认证串
+     *
+     * @param clientId
+     * @param clientSecret
+     * @return
+     */
     private String httpbasic(String clientId, String clientSecret) {
-
         //将客户端id和客户端密码拼接，按“客户端id:客户端密码”
         String string = clientId + ":" + clientSecret;
         //进行base64编码
-        byte[] encode = Base64.encode(string.getBytes());
+        byte[] encode = Base64.getEncoder().encode(string.getBytes());
         return "Basic " + new String(encode);
     }
 
@@ -205,6 +220,11 @@ public class AuthService {
         return authToken;
     }
 
+    /**
+     * clear token
+     *
+     * @param access_token
+     */
     public void clearToken(String access_token) {
         //令牌名称
         String name = "user_token:" + access_token;

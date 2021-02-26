@@ -13,14 +13,16 @@ import io.swagger.annotations.ApiOperation;
  * 3。 客户端携带cookie中的身份令牌请求认证服务获取JWT
  * 4。 认证服务根据身份令牌从redis中查询JWT令牌返回给客户端
  * 5。 客户端拿到JWT获取客户信息，（用户登录成功在页头显示登录用户昵称）
+ *
+ * @author atom
  */
-@Api(value = "用户认证", description = "用户认证接口")
+@Api(tags = "用户认证")
 public interface AuthControllerApi {
 
-    @ApiOperation("登录")
+    @ApiOperation(value = "登录")
     LoginResult login(LoginRequest loginRequest);
 
-    @ApiOperation("退出")
+    @ApiOperation(value = "退出")
     ResponseResult logout();
 
     /**
@@ -29,7 +31,7 @@ public interface AuthControllerApi {
      *
      * @return
      */
-    @ApiOperation("查询user jwt令牌")
+    @ApiOperation(value = "查询user jwt令牌")
     JwtResult userjwt();
 
 }

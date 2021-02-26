@@ -25,12 +25,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * @author atom
+ */
 @RestController
 public class AuthController implements AuthControllerApi {
 
+    /**
+     * 客户端ID
+     */
     @Value("${auth.clientId}")
     private String clientId;
 
+    /**
+     * 客户端密码
+     */
     @Value("${auth.clientSecret}")
     private String clientSecret;
 
@@ -40,11 +49,9 @@ public class AuthController implements AuthControllerApi {
     @Value("${auth.cookieMaxAge}")
     private int cookieMaxAge;
 
-    @Value("${auth.tokenValiditySeconds}")
-    private int tokenValiditySeconds;
-
     @Resource
     private AuthService authService;
+
 
     @Override
     @PostMapping("/userlogin")
@@ -57,9 +64,10 @@ public class AuthController implements AuthControllerApi {
         if (StringUtils.isEmpty(loginRequest.getPassword())) {
             ExceptionCast.cast(AuthCode.AUTH_PASSWORD_NONE);
         }
+        //获取JWT令牌（token）
         AuthToken authToken = authService.login(loginRequest.getUsername(),
                 loginRequest.getPassword(), clientId, clientSecret);
-        //访问token
+        //获取访问token就是短令牌 jti：JWT ID
         String access_token = authToken.getAccess_token();
         //将访问令牌存储到cookie
         saveCookie(access_token);
@@ -67,36 +75,14 @@ public class AuthController implements AuthControllerApi {
     }
 
 
-    /**
-     * 将令牌保存到cookie
-     *
-     * @param token
-     */
-    private void saveCookie(String token) {
-        HttpServletResponse response = ((ServletRequestAttributes)
-                RequestContextHolder.getRequestAttributes()).getResponse();
-        //添加cookie 认证令牌，最后一个参数设置为false，表示允许浏览器获取
-        CookieUtil.addCookie(response, cookieDomain, "/", "uid", token, cookieMaxAge, false);
-    }
-
-    //将令牌保存到cookie
-    private void clearCookie(String token) {
-        HttpServletResponse response = ((ServletRequestAttributes)
-                RequestContextHolder.getRequestAttributes()).getResponse();
-        //添加cookie 认证令牌，最后一个参数设置为false，表示允许浏览器获取
-        CookieUtil.addCookie(response, cookieDomain, "/", "uid", token, 0, false);
-    }
-
     @Override
     @PostMapping("/userlogout")
     public ResponseResult logout() {
         String access_token = getTokenFormCookie();
-
-        // 清除redis
+        // 清除redis中的JWT令牌（token）
         authService.clearToken(access_token);
         // 清除cookie
         clearCookie(access_token);
-
         return ResponseResult.SUCCESS();
     }
 
@@ -111,7 +97,11 @@ public class AuthController implements AuthControllerApi {
         return new JwtResult(CommonCode.SUCCESS, authToken.getJwt_token());
     }
 
-    //从cookie中读取访问令牌
+    /**
+     * 从cookie中读取访问令牌
+     *
+     * @return
+     */
     private String getTokenFormCookie() {
         HttpServletRequest request = ((ServletRequestAttributes)
                 RequestContextHolder.getRequestAttributes()).getRequest();
@@ -119,4 +109,43 @@ public class AuthController implements AuthControllerApi {
         return cookieMap.get("uid");
     }
 
+
+    /**
+     * 将令牌保存到cookie
+     *
+     * @param token
+     */
+    private void saveCookie(String token) {
+        HttpServletResponse response = ((ServletRequestAttributes)
+                RequestContextHolder.getRequestAttributes()).getResponse();
+        //添加cookie 认证令牌，最后一个参数httpOnly设置为false，表示允许浏览器获取cookie
+        /**
+         *
+         * cookie domain: xuecheng.com
+         * cookie path: /
+         * cookie name : uid
+         *
+         */
+        CookieUtil.addCookie(response, cookieDomain, "/", "uid", token, cookieMaxAge, false);
+    }
+
+
+    /**
+     * 清除cookie,直接设置 maxAge=0
+     *
+     * @param token
+     */
+    private void clearCookie(String token) {
+        HttpServletResponse response = ((ServletRequestAttributes)
+                RequestContextHolder.getRequestAttributes()).getResponse();
+        //添加cookie 认证令牌，最后一个参数httpOnly设置为false，表示允许浏览器获取cookie
+        /**
+         *
+         * cookie domain: xuecheng.com
+         * cookie path: /
+         * cookie name : uid
+         *
+         */
+        CookieUtil.addCookie(response, cookieDomain, "/", "uid", token, 0, false);
+    }
 }
