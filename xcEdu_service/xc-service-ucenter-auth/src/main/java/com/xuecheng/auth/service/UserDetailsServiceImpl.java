@@ -51,17 +51,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         // 查询用户信息
-        XcUserExt userext = userClient.findByUsername(username);
-        if (userext.getPermissions() == null) {
-            userext.setPermissions(new ArrayList<>());
+        XcUserExt userExt = userClient.findByUsername(username);
+        if (userExt.getPermissions() == null) {
+            userExt.setPermissions(new ArrayList<>());
         }
-        if (userext == null) {
+        if (userExt == null) {
             return null;
         }
         //从数据库查询用户正确的密码，Spring Security会去比对输入密码的正确性
-        String password = userext.getPassword();
+        String password = userExt.getPassword();
 
-        List<String> stringList = userext.getPermissions()
+        List<String> stringList = userExt.getPermissions()
                 .stream()
                 .map(XcMenu::getCode)
                 .collect(Collectors.toList());
@@ -72,11 +72,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 password,
                 AuthorityUtils.createAuthorityList(stringList.toArray(permissionList)));
 
-        userDetails.setId(userext.getId());
-        userDetails.setUtype(userext.getUtype());//用户类型
-        userDetails.setCompanyId(userext.getCompanyId());//所属企业
-        userDetails.setName(userext.getName());//用户名称
-        userDetails.setUserpic(userext.getUserpic());//用户头像
+        userDetails.setId(userExt.getId());
+        userDetails.setUtype(userExt.getUtype());//用户类型
+        userDetails.setCompanyId(userExt.getCompanyId());//所属企业
+        userDetails.setName(userExt.getName());//用户名称
+        userDetails.setUserpic(userExt.getUserpic());//用户头像
 
        /* UserDetails userDetails = new org.springframework.security.core.userdetails.User(username,
                 password,

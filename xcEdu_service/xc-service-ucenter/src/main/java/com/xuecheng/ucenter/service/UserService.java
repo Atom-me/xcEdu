@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -37,7 +38,7 @@ public class UserService {
 
         // 查询用户信息
         XcUser userInfo = xcUserRepository.findByUsername(username);
-        if (userInfo == null) {
+        if (Objects.isNull(userInfo)) {
             return null;
         }
 
@@ -45,7 +46,7 @@ public class UserService {
 
         // 查询用户公司信息
         XcCompanyUser companyUser = xcCompanyUserRepository.findByUserId(userInfo.getId());
-        if (companyUser != null) {
+        if (Objects.nonNull(companyUser)) {
             result.setCompanyId(companyUser.getCompanyId());
         }
 

@@ -151,9 +151,7 @@ public class AuthService {
             ResponseEntity<Map> mapResponseEntity = restTemplate.exchange(path, HttpMethod.POST, new HttpEntity<>(formData, header), Map.class);
             map = mapResponseEntity.getBody();
         } catch (RestClientException e) {
-            e.printStackTrace();
             LOGGER.error("request oauth_token_password error: {}", e.getMessage());
-            e.printStackTrace();
             ExceptionCast.cast(AuthCode.AUTH_LOGIN_APPLY_TOKEN_FAIL);
         }
 
@@ -161,18 +159,23 @@ public class AuthService {
                 map.get("access_token") == null ||
                 map.get("refresh_token") == null ||
                 map.get("jti") == null) {//jti (JWT ID)：编号
+
             String error_description = (String) map.get("error_description");
 
+            //密码错误返回自定义信息
             if (StringUtils.isNotEmpty(error_description)) {
                 if (error_description.equals("坏的凭证")) {
                     ExceptionCast.cast(AuthCode.AUTH_CREDENTIAL_ERROR);
-                } else if (error_description.indexOf("UserDetailsService returned null") >= 0) {
+                } else if (error_description.contains("UserDetailsService returned null")) {
+                    //账号不存在情况返回自定义信息
                     ExceptionCast.cast(AuthCode.AUTH_ACCOUNT_NOTEXISTS);
                 }
             }
 
             ExceptionCast.cast(AuthCode.AUTH_LOGIN_APPLY_TOKEN_FAIL);
         }
+
+
         AuthToken authToken = new AuthToken();
         //访问令牌(jwt)
         String jwt_token = (String) map.get("access_token");

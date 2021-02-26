@@ -10,6 +10,13 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags = "用户中心")
 public interface UcenterControllerApi {
 
+
+    /**
+     * 根据用户账号获取用户信息，用户公司信息，用户权限信息
+     *
+     * @param username
+     * @return
+     */
     @ApiOperation(value = "按用户名查询用户信息")
     XcUserExt findByUsername(String username);
 

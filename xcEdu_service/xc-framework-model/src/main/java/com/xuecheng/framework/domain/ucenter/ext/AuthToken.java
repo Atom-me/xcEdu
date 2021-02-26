@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AuthToken {
     /**
-     * 访问token,里面放的是 JWT 的 ID编号： jti。 作为用户的身份标识
+     * 访问token,里面放的是 JWT 的 ID编号： jti。 作为用户的身份标识，短令牌
      * <p>
      * [ jti (JWT ID)：编号 ]
      */
@@ -23,7 +23,7 @@ public class AuthToken {
      */
     String refresh_token;
     /**
-     * jwt令牌 里面放的是 jwt 的 access_token
+     * jwt令牌 里面放的是 jwt 的 access_token,长令牌
      */
     String jwt_token;
 }

@@ -21,6 +21,12 @@ public class UserController implements UcenterControllerApi {
     @Resource
     private UserService userService;
 
+    /**
+     * 根据用户账号获取用户信息，用户公司信息，用户权限信息
+     *
+     * @param username
+     * @return
+     */
     @Override
     @GetMapping("getuserext")
     public XcUserExt findByUsername(@RequestParam("username") String username) {

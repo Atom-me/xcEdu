@@ -86,19 +86,25 @@ public class AuthController implements AuthControllerApi {
         return ResponseResult.SUCCESS();
     }
 
+    /**
+     * 1。 客户端携带cookie中的身份令牌请求认证服务获取JWT
+     * 2。 认证服务根据身份令牌从redis中查询JWT令牌返回给客户端
+     *
+     * @return
+     */
     @Override
     @GetMapping("userjwt")
     public JwtResult userjwt() {
         String access_token = getTokenFormCookie();
         AuthToken authToken = authService.getUserToken(access_token);
-        if (authToken == null) {
+        if (Objects.isNull(authToken)) {
             return new JwtResult(CommonCode.FAIL, null);
         }
         return new JwtResult(CommonCode.SUCCESS, authToken.getJwt_token());
     }
 
     /**
-     * 从cookie中读取访问令牌
+     * 从cookie中读取访问令牌（jti：JWT ID）短令牌
      *
      * @return
      */

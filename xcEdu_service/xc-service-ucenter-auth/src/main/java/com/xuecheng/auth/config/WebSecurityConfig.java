@@ -28,7 +28,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * 采用bcrypt对密码进行编码
+     * 采用bcrypt对密码进行编码，同一个密码每次加密也都会使用一个随机盐
      *
      * @return
      */
