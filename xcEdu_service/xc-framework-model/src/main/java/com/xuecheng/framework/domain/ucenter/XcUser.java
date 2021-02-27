@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
+ * 权限数据模型： 用户表，存储系统用户信息，用户类型包括学生，老师，管理员等
+ *
  * @author admin
  * @date 2018/3/19
  */

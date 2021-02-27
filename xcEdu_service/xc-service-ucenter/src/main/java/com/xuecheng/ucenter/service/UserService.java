@@ -8,22 +8,25 @@ import com.xuecheng.ucenter.dao.XcCompanyUserRepository;
 import com.xuecheng.ucenter.dao.XcMenuMapper;
 import com.xuecheng.ucenter.dao.XcUserRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author atom
+ */
 @Service
 public class UserService {
 
-    @Autowired
+    @Resource
     private XcUserRepository xcUserRepository;
 
-    @Autowired
+    @Resource
     private XcCompanyUserRepository xcCompanyUserRepository;
 
-    @Autowired
+    @Resource
     private XcMenuMapper xcMenuMapper;
 
 
