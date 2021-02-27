@@ -6,16 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 @Service
 public class AuthService {
 
-    @Autowired
+    @Resource
     StringRedisTemplate stringRedisTemplate;
 
-    //查询身份令牌
+    /**
+     * 从cookie查询身份令牌 uid(jti)
+     *
+     * @param request
+     * @return
+     */
     public String getTokenFromCookie(HttpServletRequest request) {
         Map<String, String> cookieMap = CookieUtil.readCookie(request, "uid");
         String access_token = cookieMap.get("uid");
@@ -25,7 +34,12 @@ public class AuthService {
         return access_token;
     }
 
-    //从header中查询jwt令牌
+    /**
+     * 从header中查询jwt access_token 令牌
+     *
+     * @param request
+     * @return
+     */
     public String getJwtFromHeader(HttpServletRequest request) {
         String authorization = request.getHeader("Authorization");
         if (StringUtils.isEmpty(authorization)) {
@@ -39,7 +53,12 @@ public class AuthService {
         return authorization;
     }
 
-    //查询令牌的有效期
+    /**
+     * 查询jwt access_token令牌的有效期
+     *
+     * @param access_token
+     * @return
+     */
     public long getExpire(String access_token) {
         //token在redis中的key
         String key = "user_token:" + access_token;
