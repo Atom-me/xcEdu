@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * 权限数据模型： 菜单表（权限表，一个一个的菜单就是一个一个的功能）
+ * 权限数据模型： 权限表（菜单表，一个一个的菜单就是一个一个的功能）
  *
  * @author admin
  * @date 2018/3/19

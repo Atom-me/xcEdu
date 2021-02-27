@@ -51,7 +51,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return null;
         }
 
-        // 查询用户信息
+        // 调用用户中心查询用户信息
         XcUserExt userExt = userClient.findByUsername(username);
 
         if (Objects.isNull(userExt)) {
