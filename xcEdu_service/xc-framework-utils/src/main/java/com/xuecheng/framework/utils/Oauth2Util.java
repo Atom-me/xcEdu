@@ -8,20 +8,23 @@ import org.springframework.security.jwt.JwtHelper;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 public class Oauth2Util {
 
-    public static Map<String,String> getJwtClaimsFromHeader(HttpServletRequest request) {
+    public static Map<String, String> getJwtClaimsFromHeader(HttpServletRequest request) {
         if (request == null) {
             return null;
         }
         //取出头信息
         String authorization = request.getHeader("Authorization");
-        if (StringUtils.isEmpty(authorization) || authorization.indexOf("Bearer") < 0) {
+        if (StringUtils.isEmpty(authorization) || !authorization.startsWith("Bearer")) {
             return null;
         }
         //从Bearer 后边开始取出token
         String token = authorization.substring(7);
-        Map<String,String> map = null;
+        Map<String, String> map = null;
         try {
             //解析jwt
             Jwt decode = JwtHelper.decode(token);

@@ -6,11 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 public class XcOauth2Util {
 
-    public UserJwt getUserJwtFromHeader(HttpServletRequest request){
+    public UserJwt getUserJwtFromHeader(HttpServletRequest request) {
         Map<String, String> jwtClaims = Oauth2Util.getJwtClaimsFromHeader(request);
-        if(jwtClaims == null || StringUtils.isEmpty(jwtClaims.get("id"))){
+        if (jwtClaims == null || StringUtils.isEmpty(jwtClaims.get("id"))) {
             return null;
         }
         UserJwt userJwt = new UserJwt();
@@ -23,7 +26,7 @@ public class XcOauth2Util {
     }
 
     @Data
-    public class UserJwt{
+    public static class UserJwt {
         private String id;
         private String name;
         private String userpic;

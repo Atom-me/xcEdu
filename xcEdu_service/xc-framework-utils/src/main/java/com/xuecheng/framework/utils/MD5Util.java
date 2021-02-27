@@ -9,7 +9,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by admin on 2018/3/5.
+ *
+ * @author admin
+ * @date 2018/3/5
  */
 public class MD5Util {
 
@@ -69,11 +71,10 @@ public class MD5Util {
      *
      * @param data the byte[] data
      * @return md5串
-     * @throws IOException
      */
-    public static String getFileMD5String(byte[] data) throws IOException {
+    public static String getFileMD5String(byte[] data) {
         MD5.update(data);
-        return new String(encodeHex(MD5.digest()));
+        return encodeHex(MD5.digest());
     }
 
     /**

@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by mrt on 2018/3/27.
+ * @author mrt
+ * @date 2018/3/27
  */
 public class GenerateOrderNum {
     /**
@@ -18,7 +19,7 @@ public class GenerateOrderNum {
     /**
      * 每毫秒生成订单号数量最大值
      */
-    private int maxPerMSECSize=1000;
+    private int maxPerMSECSize = 1000;
 
     /**
      *
@@ -26,6 +27,7 @@ public class GenerateOrderNum {
 
     /**
      * 生成非重复订单号，理论上限1毫秒1000个，可扩展
+     *
      * @param tname 测试用
      */
     public synchronized void generate(String tname) {
@@ -40,10 +42,10 @@ public class GenerateOrderNum {
                     orderNumCount = 0L;
                 }
                 //组装订单号
-                String countStr=maxPerMSECSize +orderNumCount+"";
-                finOrderNum=nowLong+countStr.substring(1);
+                String countStr = maxPerMSECSize + orderNumCount + "";
+                finOrderNum = nowLong + countStr.substring(1);
                 orderNumCount++;
-                System.out.println(finOrderNum + "--" + Thread.currentThread().getName() + "::" + tname );
+                System.out.println(finOrderNum + "--" + Thread.currentThread().getName() + "::" + tname);
                 // Thread.sleep(1000);
             }
         } catch (Exception e) {
