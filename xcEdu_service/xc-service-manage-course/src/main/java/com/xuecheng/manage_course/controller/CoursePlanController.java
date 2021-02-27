@@ -11,6 +11,7 @@ import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.manage_course.service.CoursePlanService;
 import com.xuecheng.manage_course.service.CourseService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,6 +36,7 @@ public class CoursePlanController extends BaseController implements CoursePlanCo
      * @param courseId 课程ID
      * @return TeachPlanNode
      */
+//    @PreAuthorize("hasAuthority('course_teachplan_list')")//拥有course_teachplan_list权限的用户才可以访问这个方法
     @Override
     @GetMapping("list/{courseId}")
     public TeachplanNode findList(@PathVariable String courseId) {

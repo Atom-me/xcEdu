@@ -25,9 +25,18 @@ public class XcUser {
     private String username;
     private String password;
     private String salt;
+    /**
+     * 用户名称
+     */
     private String name;
+    /**
+     * 用户类型
+     */
     private String utype;
     private String birthday;
+    /**
+     * 用户头像
+     */
     private String userpic;
     private String sex;
     private String email;

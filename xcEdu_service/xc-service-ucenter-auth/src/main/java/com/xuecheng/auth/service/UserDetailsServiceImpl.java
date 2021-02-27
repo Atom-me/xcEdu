@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -52,15 +53,19 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // 查询用户信息
         XcUserExt userExt = userClient.findByUsername(username);
-        if (userExt.getPermissions() == null) {
-            userExt.setPermissions(new ArrayList<>());
-        }
-        if (userExt == null) {
+
+        if (Objects.isNull(userExt)) {
             return null;
         }
+
+        if (CollectionUtils.isEmpty(userExt.getPermissions())) {
+            userExt.setPermissions(new ArrayList<>());
+        }
+
         //从数据库查询用户正确的密码，Spring Security会去比对输入密码的正确性
         String password = userExt.getPassword();
 
+        //用户权限
         List<String> stringList = userExt.getPermissions()
                 .stream()
                 .map(XcMenu::getCode)
@@ -73,15 +78,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 AuthorityUtils.createAuthorityList(stringList.toArray(permissionList)));
 
         userDetails.setId(userExt.getId());
-        userDetails.setUtype(userExt.getUtype());//用户类型
-        userDetails.setCompanyId(userExt.getCompanyId());//所属企业
-        userDetails.setName(userExt.getName());//用户名称
-        userDetails.setUserpic(userExt.getUserpic());//用户头像
+        userDetails.setUtype(userExt.getUtype());
+        userDetails.setCompanyId(userExt.getCompanyId());
+        userDetails.setName(userExt.getName());
+        userDetails.setUserpic(userExt.getUserpic());
 
-       /* UserDetails userDetails = new org.springframework.security.core.userdetails.User(username,
-                password,
-                AuthorityUtils.commaSeparatedStringToAuthorityList(""));*/
-//                AuthorityUtils.createAuthorityList("course_get_baseinfo","course_get_list"));
         return userDetails;
     }
 }

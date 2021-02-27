@@ -19,22 +19,42 @@ import java.util.stream.Collectors;
 
 /**
  * @author atom
+ * @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+ * 这个注解会激活方法上的PreAuthorize注解
+ * <p>
+ * 微服务（资源服务）要想使用方法授权，首先在资源服务配置授权控制
+ * 1。添加Sprign-cloud-starter-oauth2依赖
+ * 2。拷贝授权配置类 ResourceServerConfig
+ * 3。拷贝公钥
+ * <p>
+ * 在contorller方法上添加注解  @PreAuthorize("hasAuthority('course_teachplan_list')")//拥有course_teachplan_list权限的用户才可以访问这个方法
  */
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    //公钥
+    /**
+     * 公钥
+     */
     private static final String PUBLIC_KEY = "publickey.txt";
 
-    //定义JwtTokenStore，使用jwt令牌
+    /**
+     * 定义 JwtTokenStore，使用jwt令牌
+     *
+     * @param jwtAccessTokenConverter
+     * @return
+     */
     @Bean
     public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
         return new JwtTokenStore(jwtAccessTokenConverter);
     }
 
-    //定义JJwtAccessTokenConverter，使用jwt令牌
+    /**
+     * 定义 JwtAccessTokenConverter，使用jwt令牌
+     *
+     * @return
+     */
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
@@ -59,7 +79,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
     }
 
-    //Http安全配置，对每个到达系统的http请求链接进行校验
+    /**
+     * Http安全配置，对每个到达系统的http请求链接进行校验
+     *
+     * @param http
+     * @throws Exception
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         //todo "/course/**","/category/**" 记得删除
@@ -67,7 +92,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui",
                         "/swagger-resources", "/swagger-resources/configuration/security",
-                        "/swagger-ui.html", "/webjars/**","/course/**","/category/**").permitAll()
+                        "/swagger-ui.html", "/webjars/**", "/course/**", "/category/**").permitAll()
                 .anyRequest().authenticated();
 
     }

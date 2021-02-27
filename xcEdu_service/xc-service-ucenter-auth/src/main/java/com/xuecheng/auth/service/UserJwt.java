@@ -15,9 +15,21 @@ import java.util.Collection;
 public class UserJwt extends User {
 
     private String id;
+    /**
+     * 用户名称
+     */
     private String name;
+    /**
+     * 用户头像
+     */
     private String userpic;
+    /**
+     * 用户类型
+     */
     private String utype;
+    /**
+     * 所属企业
+     */
     private String companyId;
 
     public UserJwt(String username, String password, Collection<? extends GrantedAuthority> authorities) {
