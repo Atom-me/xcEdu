@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import ElementUI from 'element-ui'
+import ElementUI, {Message} from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueRouter from 'vue-router'
 
@@ -13,16 +13,18 @@ import Vuex from 'vuex'
 // 导入mint-ui的css文件
 import 'mint-ui/lib/style.min.css';
 // 导入mint-ui组件对象
-import mintui from 'mint-ui';
+// 导入轮播图
+import mintui, {Swipe, SwipeItem} from 'mint-ui';
 // 注册mui的css样式
 import './statics/mui/css/mui.css';
 
 // 导入当前系统的全局基本样式
 import './statics/css/site.css';
-// 导入轮播图
-import { Swipe, SwipeItem } from 'mint-ui';
 import utilApi from './common/utils';
 import * as systemApi from './base/api/system';
+//  将vue-resource在vue中绑定，自动在vue对象实例上注入一个$http对象就可以使用ajax方法了
+import vueResource from 'vue-resource';
+import axios from 'axios'
 // import Mock from './mock'
 // Mock.bootstrap();
 
@@ -38,57 +40,54 @@ Vue.use(VueRouter)
 
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
-//  将vue-resource在vue中绑定，自动在vue对象实例上注入一个$http对象就可以使用ajax方法了
-import vueResource from 'vue-resource';
+
 let sysConfig = require('@/../config/sysConfig')
 let openAuthenticate = sysConfig.openAuthenticate
 let openAuthorize = sysConfig.openAuthorize
 Vue.use(vueResource);
 /* eslint-disable no-new */
 const router = new VueRouter({
-  routes:routes
+  routes: routes
 })
 
 
 router.beforeEach((to, from, next) => {
-  if(openAuthenticate){
-
+  if (openAuthenticate) {
     // console.log(to)
     // console.log(from)
     //***********身份校验***************
     let activeUser
     let uid
-    try{
+    try {
       activeUser = utilApi.getActiveUser()
       uid = utilApi.getCookie("uid")
-    }catch(e){
+    } catch (e) {
       //alert(e)
     }
-    if(activeUser && uid && uid == activeUser.uid) {
+    if (activeUser && uid && uid == activeUser.uid) {
       next();
-    }else if(to.path =='/login' || to.path =='/logout'){
+    } else if (to.path == '/login' || to.path == '/logout') {
       next();
-    }else if(uid){
-
+    } else if (uid) {
       //请求获取jwt
-      systemApi.getjwt().then((res)=>{
-        if(res.success){
+      systemApi.getjwt().then((res) => {
+        if (res.success) {
           let jwt = res.jwt;
           let activeUser = utilApi.getUserInfoFromJwt(jwt)
-          if(activeUser){
-            utilApi.setUserSession("activeUser",JSON.stringify(activeUser))
+          if (activeUser) {
+            utilApi.setUserSession("activeUser", JSON.stringify(activeUser))
           }
           next();
-        }else{
+        } else {
           //跳转到统一登陆
-          window.location = "http://ucenter.xuecheng.com/#/login?returnUrl="+ Base64.encode(window.location)
+          window.location = "http://ucenter.xuecheng.com/#/login?returnUrl=" + Base64.encode(window.location)
         }
       })
-    }else{
+    } else {
       //跳转到统一登陆
-      window.location = "http://ucenter.xuecheng.com/#/login?returnUrl="+ Base64.encode(window.location)
+      window.location = "http://ucenter.xuecheng.com/#/login?returnUrl=" + Base64.encode(window.location)
     }
-  }else{
+  } else {
     next();
   }
 
@@ -115,57 +114,56 @@ router.beforeEach((to, from, next) => {
 //
 // });
 
-import axios from 'axios'
-import { Message } from 'element-ui';
 
 // 添加请求拦截器，实现http请求添加Authorization头信息
 axios.interceptors.request.use(function (config) {
   // 在发送请求向header添加jwt
   let jwt = utilApi.getJwt()
-  if(jwt){
-    config.headers['Authorization'] = 'Bearer '+jwt
+  if (jwt) {
+    config.headers['Authorization'] = 'Bearer ' + jwt
   }
   return config;
 }, function (error) {
   return Promise.reject(error);
 });
+
 // 响应拦截
 axios.interceptors.response.use(data => {
   console.log("data=")
   console.log(data)
-  if(data && data.data){
-    if(data.data.code && data.data.code =='10001'){
+  if (data && data.data) {
+    if (data.data.code && data.data.code == '10001') {
       //需要登录
       // router.push({
       //   path: '/login',
       //   query: {returnUrl: Base64.encode(window.location)}
       // })
-      window.location = "http://ucenter.xuecheng.com/#/login?returnUrl="+ Base64.encode(window.location)
-    }else if(data.data.code && data.data.code =='10002'){
+      window.location = "http://ucenter.xuecheng.com/#/login?returnUrl=" + Base64.encode(window.location)
+    } else if (data.data.code && data.data.code == '10002') {
       Message.error('您没有此操作的权限，请与客服联系！');
-    }else if(data.data.code && data.data.code =='10003'){
+    } else if (data.data.code && data.data.code == '10003') {
       Message.error('认证被拒绝，请重新登录重试！');
     }
   }
   return data
 })
 
- //axios请求超时设置
+//axios请求超时设置
 axios.defaults.retry = 2;
 axios.defaults.retryDelay = 2000;
 axios.interceptors.response.use(data => {// 响应拦截
   console.log("data=")
   console.log(data)
-  if(data && data.data){
-    if(data.data.code && data.data.code =='10001'){
+  if (data && data.data) {
+    if (data.data.code && data.data.code == '10001') {
       //需要登录
       router.push({
         path: '/login',
         query: {returnUrl: Base64.encode(window.location)}
       })
-    }else if(data.data.code && data.data.code =='10002'){
+    } else if (data.data.code && data.data.code == '10002') {
       Message.error('您没有此操作的权限，请与客服联系！');
-    }else if(data.data.code && data.data.code =='10003'){
+    } else if (data.data.code && data.data.code == '10003') {
       Message.error('认证被拒绝，请重新登录重试！');
       //需要登录
       // router.push({
@@ -178,13 +176,13 @@ axios.interceptors.response.use(data => {// 响应拦截
 }, function axiosRetryInterceptor(err) {
   var config = err.config;
   // If config does not exist or the retry option is not set, reject
-  if(!config || !config.retry) return Promise.reject(err);
+  if (!config || !config.retry) return Promise.reject(err);
 
   // Set the variable for keeping track of the retry count
   config.__retryCount = config.__retryCount || 0;
 
   // Check if we've maxed out the total number of retries
-  if(config.__retryCount >= config.retry) {
+  if (config.__retryCount >= config.retry) {
     // Reject with the error
     Message.error('系统忙，请稍后重试');
     return Promise.reject(err);
@@ -194,14 +192,14 @@ axios.interceptors.response.use(data => {// 响应拦截
   config.__retryCount += 1;
 
   // Create new promise to handle exponential backoff
-  var backoff = new Promise(function(resolve) {
-    setTimeout(function() {
+  var backoff = new Promise(function (resolve) {
+    setTimeout(function () {
       resolve();
     }, config.retryDelay || 1);
   });
 
   // Return the promise in which recalls axios to retry the request
-  return backoff.then(function() {
+  return backoff.then(function () {
     return axios(config);
   });
 });
