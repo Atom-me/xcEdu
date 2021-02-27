@@ -124,7 +124,7 @@ public class CourseBaseService extends BaseService {
         courseListRequest.setCompanyId(companyId);
         // 分页
         PageHelper.startPage(page, size);
-        // 调用dao
+        // 查询指定教学机构的课程
         com.github.pagehelper.Page<CourseInfo> courseListPage = courseMapper.findCourseListPage(courseListRequest);
         List<CourseInfo> list = courseListPage.getResult();
         long total = courseListPage.getTotal();

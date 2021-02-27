@@ -32,6 +32,18 @@ public interface CourseBaseControllerApi {
     @ApiOperation(value = "查询指定课程ID的基本信息")
     CourseBaseResult findById(String courseId);
 
+    /**
+     * 我的课程查询，细粒度授权过程
+     * 1。 获取当前登录的用户的ID
+     * 2。 得到用户所属教育机构的ID
+     * 3。 查询该教学结构下的课程信息
+     * 最终实现了用户只允许查询自己机构的课程信息
+     *
+     * @param page
+     * @param size
+     * @param courseListRequest
+     * @return
+     */
     QueryResponseResult findCourseList(int page, int size, CourseListRequest courseListRequest);
 
 

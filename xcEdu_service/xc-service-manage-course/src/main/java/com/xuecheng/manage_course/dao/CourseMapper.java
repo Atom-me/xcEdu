@@ -16,5 +16,11 @@ public interface CourseMapper {
 
     CourseBase findCourseBaseById(String id);
 
+    /**
+     * 查询指定教学机构的课程
+     *
+     * @param courseListRequest
+     * @return
+     */
     Page<CourseInfo> findCourseListPage(CourseListRequest courseListRequest);
 }

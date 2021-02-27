@@ -32,6 +32,9 @@ public class CourseBase implements Serializable {
     private String teachmode;
     private String description;
     private String status;
+    /**
+     * 教育机构ID，细粒度授权使用，控制用户只能查询自己机构的课程
+     */
     @Column(name = "company_id")
     private String companyId;
     @Column(name = "user_id")

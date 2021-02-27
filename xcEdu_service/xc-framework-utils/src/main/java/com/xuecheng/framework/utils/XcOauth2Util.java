@@ -28,9 +28,21 @@ public class XcOauth2Util {
     @Data
     public static class UserJwt {
         private String id;
+        /**
+         * 用户昵称
+         */
         private String name;
+        /**
+         * 用户头像
+         */
         private String userpic;
+        /**
+         * 用户类型
+         */
         private String utype;
+        /**
+         * 用户所属教学机构
+         */
         private String companyId;
     }
 

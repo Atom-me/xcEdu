@@ -27,7 +27,7 @@ public class CourseBaseController extends BaseController implements CourseBaseCo
 
 
     @Override
-    @GetMapping("list/{page}/{size}")
+//    @GetMapping("list/{page}/{size}")
     public QueryResponseResult findList(@PathVariable int page,
                                         @PathVariable int size,
                                         CourseListRequest queryPageRequest) {
@@ -75,10 +75,21 @@ public class CourseBaseController extends BaseController implements CourseBaseCo
         return CourseBaseResult.SUCCESS(courseBase);
     }
 
+    /**
+     * 我的课程查询，细粒度授权过程
+     * 1。 获取当前登录的用户的ID
+     * 2。 得到用户所属教育机构的ID
+     * 3。 查询该教学结构下的课程信息
+     * 最终实现了用户只允许查询自己机构的课程信息
+     *
+     * @param page
+     * @param size
+     * @param courseListRequest
+     * @return
+     */
     @Override
-    //todo 临时注释
-//    @GetMapping("/list/{page}/{size}")
-    public QueryResponseResult findCourseList(@PathVariable int page, @PathVariable int size,
+    @GetMapping("/list/{page}/{size}")
+    public QueryResponseResult findCourseList(@PathVariable("page") int page, @PathVariable("size") int size,
                                               CourseListRequest courseListRequest) {
         // 获取当前用户信息
         XcOauth2Util xcOauth2Util = new XcOauth2Util();
