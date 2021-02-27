@@ -11,10 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
-import java.nio.file.AccessDeniedException;
-
 /**
- * 统一异常处理类
+ * 统一异常处理类，可以在各个资源服务中自定义自己服务的统一异常处理器，自定义自己服务的异常代码，只需要继承这个类即可
  *
  * @author atom
  */
@@ -27,15 +25,13 @@ public class ExceptionCatch {
      */
     private static ImmutableMap<Class<? extends Throwable>, ResultCode> OPTIONS;
 
-    private static ImmutableMap.Builder<Class<? extends Throwable>, ResultCode> builder = ImmutableMap.builder();
+    protected static ImmutableMap.Builder<Class<? extends Throwable>, ResultCode> builder = ImmutableMap.builder();
 
     static {
         OPTIONS = builder
                 .put(HttpMessageNotReadableException.class, CommonCode.PARAMS_ERROR)
                 .put(MissingServletRequestPartException.class, CommonCode.PARAMS_ERROR)
-                .put(AccessDeniedException.class, CommonCode.UNAUTHORISE)
                 .build();
-
     }
 
     /**

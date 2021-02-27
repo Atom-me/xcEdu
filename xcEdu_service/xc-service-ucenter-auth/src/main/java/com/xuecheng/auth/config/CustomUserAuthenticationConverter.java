@@ -9,13 +9,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultUserAuthenticationConverter;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * @author atom
+ */
 @Component
 public class CustomUserAuthenticationConverter extends DefaultUserAuthenticationConverter {
-    @Autowired
-    UserDetailsService userDetailsService;
+
+    @Resource
+    private UserDetailsService userDetailsService;
 
     @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
@@ -24,7 +29,7 @@ public class CustomUserAuthenticationConverter extends DefaultUserAuthentication
         response.put("user_name", name);
 
         Object principal = authentication.getPrincipal();
-        UserJwt userJwt = null;
+        UserJwt userJwt;
         if (principal instanceof UserJwt) {
             userJwt = (UserJwt) principal;
         } else {
